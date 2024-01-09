@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { State, USER } from "./module/user";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState: State = {
-    userId: null,
-    authToken: null,
+    userId: '',
+    authToken: '',
 
 };
 const userSlice = createSlice({
@@ -14,10 +15,38 @@ const userSlice = createSlice({
         login: (state, action: PayloadAction<USER>) => {
             state.userId = action.payload.userId;
             state.authToken = action.payload.authToken;
+            AsyncStorage
+                .setItem("userId", action.payload.userId)
+                .then(() => {
+                    // console.log("userId saved");
+                })
+                .catch((error) => {
+                    // console.log(error);
+                });
+            AsyncStorage
+                .setItem("authToken", action.payload.authToken)
+                .then(() => {
+                    // console.log("authToken saved");
+                })
+                .catch((error) => {
+                    // console.log(error);
+                });
+            return state;
         },
         logout: (state) => {
-            state.userId = null;
-            state.authToken = null;
+
+            // console.log("logout");
+            state.userId = "";
+            state.authToken = '';
+            AsyncStorage.removeItem("userId").catch((error) => {
+                // console.log(error);
+            });
+            AsyncStorage.removeItem("authToken").catch((error) => {
+                // console.log(error);
+            });
+
+
+            return state;
         },
     },
 });

@@ -6,11 +6,7 @@ import React, { useEffect, useState } from "react";
 import OnboradingScreen from "../components/OnboradingScreen";
 export default function Onborading() {
   const [appIsReady, setAppIsReady] = useState<boolean | undefined>(false);
-  return (
-    <SafeAreaView style={styles.container}>
-      <OnboradingScreen></OnboradingScreen>
-    </SafeAreaView>
-  );
+  return <OnboradingScreen></OnboradingScreen>;
 }
 const styles = StyleSheet.create({
   container: {

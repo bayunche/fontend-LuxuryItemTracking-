@@ -4,14 +4,17 @@ import React from "react";
 import Onboarding from "react-native-onboarding-swiper";
 import LottieView from "lottie-react-native";
 import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width, height } = Dimensions.get("window");
 
 export default function OnboradingScreen() {
   const handleDone = () => {
+    AsyncStorage.setItem("firstTime", "false"); // 将onboarding标记为true
     router.replace("/login");
   };
   const handleSkip = () => {
+    AsyncStorage.setItem("firstTime", "false"); // 将onboarding标记为true
     router.replace("/login"); // 跳转到登录页面
   };
   return (
