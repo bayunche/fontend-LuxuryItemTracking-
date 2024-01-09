@@ -4,6 +4,7 @@ import {
   ImageProps,
   TouchableWithoutFeedback,
 } from "react-native";
+
 import { View } from "./Themed";
 import LottieView from "lottie-react-native";
 import React, { useState, useEffect } from "react";
@@ -17,14 +18,9 @@ import {
   Spinner,
   Text,
 } from "@ui-kitten/components";
-import { login } from "../api/login";
+import { signup } from "../api/login";
 
 const { width, height } = Dimensions.get("window");
-const LoadingIndicator = (props: ImageProps): React.ReactElement => (
-  <View style={[props.style, styles.indicator]}>
-    <Spinner size="small" />
-  </View>
-);
 
 const Animation = () => {
   return (
@@ -39,22 +35,18 @@ const Animation = () => {
 const AlertIcon = (props: any): IconElement => (
   <Icon {...props} name="alert-circle-outline" />
 );
-const LoginRoot = () => {
+export default function SignupRoot() {
   const [userName, setUserName] = useState(""); // 初始化状态为空字符串
   const [password, setPassword] = useState(""); // 初始化状态为空字符串
-  const [loginDisabled, setLoginDisabled] = useState(false); // 初始化状态为false，表示按钮不禁用
+  const [signDisabled, setSignDisabled] = useState(false); // 初始化状态为false，表示按钮不禁用
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
-  const handleLogin = async () => {
-    //验证表单
-    if (userName=='' || password=='') {
-      return;
-    }
+  const handleSignup = async () => {
     // 处理登录逻辑
-    setLoginDisabled(true); // 禁用登录按钮
-    let res = await login({ userName, password });
+    setSignDisabled(true); // 禁用登录按钮
+    let res = await signup({ userName, password });
   };
-  const onResign = () => {
-    router.replace("/signUp");
+  const onBack = () => {
+    router.replace("/login");
   };
   const renderCaption = (): React.ReactElement => {
     return (
@@ -69,7 +61,6 @@ const LoginRoot = () => {
   const toggleSecureEntry = (): void => {
     setSecureTextEntry(!secureTextEntry);
   };
-
   const renderIcon = (props: any): React.ReactElement => (
     <TouchableWithoutFeedback onPress={toggleSecureEntry}>
       <Icon {...props} name={secureTextEntry ? "eye-off" : "eye"} />
@@ -109,24 +100,22 @@ const LoginRoot = () => {
         <Button
           style={{ width: width * 0.8, borderRadius: 20, marginTop: 20 }}
           status="primary"
-          disabled={loginDisabled}
-          onPress={handleLogin}
+          disabled={signDisabled}
+          onPress={handleSignup}
         >
-          登录
+          注册
         </Button>
         <Button
           style={{ width: width * 0.8, borderRadius: 20, marginTop: 20 }}
           status="primary"
-          onPress={onResign}
+          onPress={onBack}
         >
-          注册
+          返回
         </Button>
       </View>
     </View>
   );
-};
-
-export default LoginRoot;
+}
 
 const styles = StyleSheet.create({
   container: {
