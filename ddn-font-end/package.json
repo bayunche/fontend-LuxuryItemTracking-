@@ -23,6 +23,7 @@
     "@types/react-native-onboarding-swiper": "^1.1.9",
     "@ui-kitten/components": "^5.3.1",
     "axios": "^1.6.5",
+    "eas-cli": "^5.9.3",
     "expo": "~49.0.15",
     "expo-font": "~11.4.0",
     "expo-linking": "~5.0.2",

@@ -41,7 +41,16 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "837780ee-f4ed-4e67-ab63-5da3d0409060"
+      }
+    },
+    "owner": "bayunche"
   },
   "baseUrl": "8.134.196.44:3101"
 }
