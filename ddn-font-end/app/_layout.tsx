@@ -1,21 +1,28 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { useColorScheme } from "react-native";
+import OnboradingScreen from "../components/OnboradingScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // 异步存取的三方工具
+
 
 
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
-  
-} from 'expo-router';
+} from "expo-router";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: "(tabs)",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -23,10 +30,33 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
-
+  const [appIsReady, setAppIsReady] = useState<boolean | undefined>(false);
+  const [root, setRoot] = useState<string | undefined>();
+  const TOKEN_KEY = "AUTH_TOKEN";
+  const chooseScreen = async () => {
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
+    if (token && token.length > 0) {
+      getUserInfo();
+    } else {
+      setRoot("LaunchScreen"); // 登录页
+      setAppIsReady(true);
+    }
+  };
+  const getUserInfo = () => {
+    // customerInfo()
+    //   .then((res) => {
+    //     setRoot('Tab'); // 主页
+    //   })
+    //   .catch(() => {
+    //     setRoot('LaunchScreen'); // 登录页
+    //   })
+    //   .finally(() => {
+    //     setAppIsReady(true);
+    //   });
+  };
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
@@ -35,26 +65,35 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
+      chooseScreen();
     }
   }, [loaded]);
 
-  if (!loaded) {
+  if (!loaded) { 
     return null;
   }
 
   return <RootLayoutNav />;
 }
 
+const StackNav = createNativeStackNavigator();
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack
-        
-      >
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Screen
+          name="onBoardingScreen"
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="login"
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
       </Stack>
     </ThemeProvider>
   );

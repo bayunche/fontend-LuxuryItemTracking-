@@ -24,6 +24,13 @@
         "backgroundColor": "#ffffff"
       }
     },
+    "build": {
+      "babel": {
+        "include": [
+          "@ui-kitten/components"
+        ]
+      }
+    },
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -35,5 +42,6 @@
     "experiments": {
       "typedRoutes": true
     }
-  }
+  },
+  "baseUrl": "8.134.196.44:3101"
 }
