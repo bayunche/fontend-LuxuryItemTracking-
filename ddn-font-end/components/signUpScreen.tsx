@@ -19,6 +19,7 @@ import {
   Text,
 } from "@ui-kitten/components";
 import { signup } from "../api/login";
+import Toast from "react-native-root-toast";
 
 const { width, height } = Dimensions.get("window");
 
@@ -43,7 +44,23 @@ export default function SignupRoot() {
   const handleSignup = async () => {
     // 处理登录逻辑
     setSignDisabled(true); // 禁用登录按钮
-    let res = await signup({ userName, password });
+    try {
+      let res = await signup({ userName, password });
+      Toast.show("注册成功",{
+        hideOnPress: true,
+        duration: Toast.durations.SHORT,
+        shadow: true,
+        position: Toast.positions.BOTTOM,
+        delay: 0,
+        animation: true,
+      })
+    router.replace("/login");
+       
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSignDisabled(false); // 登录按钮
+    }
   };
   const onBack = () => {
     router.replace("/login");

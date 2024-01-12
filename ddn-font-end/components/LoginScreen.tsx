@@ -18,13 +18,9 @@ import {
   Text,
 } from "@ui-kitten/components";
 import { login } from "../api/login";
+import Toast from "react-native-root-toast";
 
 const { width, height } = Dimensions.get("window");
-const LoadingIndicator = (props: ImageProps): React.ReactElement => (
-  <View style={[props.style, styles.indicator]}>
-    <Spinner size="small" />
-  </View>
-);
 
 const Animation = () => {
   return (
@@ -45,13 +41,30 @@ const LoginRoot = () => {
   const [loginDisabled, setLoginDisabled] = useState(false); // 初始化状态为false，表示按钮不禁用
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
   const handleLogin = async () => {
-    //验证表单
-    if (userName=='' || password=='') {
-      return;
+    try {
+      // 验证表单
+      if (userName === "" || password === "") {
+        return;
+      }
+
+      setLoginDisabled(true); // 禁用登录按钮
+      // 处理登录逻辑
+      let res = await login({ userName, password });
+      Toast.show("登录成功", {
+        hideOnPress: true,
+        duration: Toast.durations.SHORT,
+        shadow: true,
+        position: Toast.positions.BOTTOM,
+        delay: 0,
+        animation: true,
+      });
+      router.push("/(tabs)"); // 登录成功后跳转到主页
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoginDisabled(false); // 启用登录按钮
     }
-    // 处理登录逻辑
-    setLoginDisabled(true); // 禁用登录按钮
-    let res = await login({ userName, password });
   };
   const onResign = () => {
     router.replace("/signUp");

@@ -13,6 +13,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // 异步存取的三方工具
 import { router } from "expo-router";
 import * as eva from "@eva-design/eva";
+import { PaperProvider } from 'react-native-paper';
 import {
   ApplicationProvider,
   IconRegistry,
@@ -27,9 +28,9 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "/onBoardingScreen",
+  initialRouteName: "onBoardingScreen",
 };
-
+import { RootSiblingParent } from 'react-native-root-siblings';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -100,9 +101,11 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
+    <RootSiblingParent>  
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
+      <PaperProvider>
         <Stack>
           <Stack.Screen
             name="onBoardingScreen"
@@ -113,7 +116,10 @@ function RootLayoutNav() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
+        </PaperProvider>
       </ApplicationProvider>
+   
     </ThemeProvider>
+    </RootSiblingParent>  
   );
 }

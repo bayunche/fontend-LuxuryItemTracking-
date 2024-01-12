@@ -1,9 +1,11 @@
 import request from "../util/request";
 
 export async function login(data: object) {
-    return request.post("/login", data)
+   
+    console.log(request.post)
+   return await request.post('/auth/login', data)
 }
 
-export async function signup(data: object) {
-    return request.post('/signup', data)
+export  function signup(data: object) {
+    return request.post('/auth/signup', data)
 }

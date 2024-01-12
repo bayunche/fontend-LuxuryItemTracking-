@@ -5,6 +5,7 @@ import Onboarding from "react-native-onboarding-swiper";
 import LottieView from "lottie-react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width, height } = Dimensions.get("window");
 
@@ -17,6 +18,7 @@ export default function OnBoradingScreen() {
     AsyncStorage.setItem("firstTime", "false"); // 将onboarding标记为true
     router.replace("/login"); // 跳转到登录页面
   };
+
   return (
     <View style={styles.container}>
       <Onboarding
@@ -24,14 +26,20 @@ export default function OnBoradingScreen() {
         onSkip={handleSkip}
         containerStyles={{ paddingHorizontal: 15 }}
         imageContainerStyles={{
-          flex: 1,
+          alignItems: "center",
+          flex: 0,
         }}
         pages={[
           {
             backgroundColor: "#66ccff",
             image: (
-              <View style={styles.LottieView}>
+              <View style={{ ...styles.LottieView, backgroundColor: "none" }}>
                 <LottieView
+                  style={{
+                    width: width * 0.8,
+                    height: width * 0.5,
+                    alignSelf: "center",
+                  }}
                   source={require("../assets/animation/AnimationFirst.json")}
                   autoPlay
                   loop
@@ -44,8 +52,13 @@ export default function OnBoradingScreen() {
           {
             backgroundColor: "#66ffcc",
             image: (
-              <View style={styles.LottieView}>
+              <View style={{ ...styles.LottieView, backgroundColor: "none" }}>
                 <LottieView
+                  style={{
+                    width: width * 0.8,
+                    height: width * 0.5,
+                    alignSelf: "center",
+                  }}
                   source={require("../assets/animation/AnimationSecond.json")}
                   autoPlay
                   loop
@@ -58,7 +71,7 @@ export default function OnBoradingScreen() {
           {
             backgroundColor: "#00ffcc",
             image: (
-              <View style={styles.LottieView}>
+              <View style={{ ...styles.LottieView, backgroundColor: "none" }}>
                 <LottieView
                   source={require("../assets/animation/AnimationThird.json")}
                   autoPlay
@@ -66,6 +79,7 @@ export default function OnBoradingScreen() {
                 />
               </View>
             ),
+
             title: "自动化管理",
             subtitle: "通过基于智能合约的执行，实现供应链自动化管理",
           },
@@ -78,16 +92,19 @@ export default function OnBoradingScreen() {
 const styles = StyleSheet.create({
   container: {
     // height: height,
-
+    flex: 1,
     height: "100%",
-    backgroundColor: "#fff",
     justifyContent: "center",
   },
+  doneButtonText: {
+    padding: 20,
+    color: "#00ffcc",
+  },
   LottieView: {
-    alignSelf: "baseline",
-    width: width * 0.6,
-    height: width * 0.6,
+    width: width * 0.8,
+    height: width * 0.5,
+    alignSelf: "center",
     justifyContent: "center",
-    flex: 1,
+    backgroundColor: "none",
   },
 });
