@@ -58,7 +58,7 @@ const LoginRoot = () => {
         delay: 0,
         animation: true,
       });
-      router.push("/(tabs)"); // 登录成功后跳转到主页
+      router.push("/(tabs)/homeScreen"); // 登录成功后跳转到主页
       console.log(res);
     } catch (err) {
       console.error(err);

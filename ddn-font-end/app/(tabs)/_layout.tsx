@@ -24,7 +24,6 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
       }}
     >
-      
       <Tabs.Screen
         name="homeScreen"
         options={{
@@ -47,11 +46,23 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="search"
+        options={{
+          title: "Search",
+          headerShadowVisible: false,
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="search1" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="personal"
         options={{
           title: "personal",
           headerShadowVisible: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="user" size={24} color={color} />
+          ),
         }}
       />
     </Tabs>
