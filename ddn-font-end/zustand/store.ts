@@ -22,7 +22,7 @@ const useUserStore = create<useUserState>((set) => ({
     removeAuthToken: () => set(() => ({ authToken: "" })),
     userInfo: {},
     setUserInfo: (info: any) => set(() => ({ userInfo: info })),
-    removeUserInfo: (info: any) => set(() => ({ userInfo: {} })),
+    removeUserInfo: () => set(() => ({ userInfo: {} })),
     // login: (data: object) => {
     //     let result={}
     //     // 调用登录接口
@@ -36,4 +36,4 @@ const useUserStore = create<useUserState>((set) => ({
 
 }))
 
-export default useUserStore;
+export { useUserStore};

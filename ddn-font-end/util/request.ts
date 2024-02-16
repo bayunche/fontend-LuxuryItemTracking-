@@ -5,8 +5,10 @@ import axios from "axios";
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import Toast from 'react-native-root-toast';
 import { tansParams } from '../util/paramsEdit';
+import { router } from "expo-router";
+
 type Result<T> = {
-    code: number;
+    // code: number;
     message: string;
     result: T;
 };
@@ -47,12 +49,12 @@ export class Request {
         );
 
         this.instance.interceptors.response.use(
-          async  (res: AxiosResponse)=> {
+            async (res: AxiosResponse) => {
                 // 直接返回res，当然你也可以只返回res.data
                 // 系统如果有自定义code也可以在这里处理
                 // 获取Bearer保存在store中
                 if (res.headers.authorization) {
-                  await  AsyncStorage.setItem('authToken', res.headers.authorization)
+                    await AsyncStorage.setItem('authToken', res.headers.authorization)
                 }
                 return res;
             },
@@ -66,6 +68,14 @@ export class Request {
                 //   message: `${message}，请检查网络或联系管理员！`,
                 //   type: "error",
                 // });
+                //如果返回值为401则调用router重定向到登录页
+                if (err.response.status === 401) {
+                    // 这里可以调用router进行重定向到登录页
+                    router.replace('/login')
+                Toast.show("登录已过期，请重新登录")
+
+                    return Promise.reject(err);
+                }
                 // 这里是AxiosError类型，所以一般我们只reject我们需要的响应即可
                 Toast.show(`Request failed to send ErrorMessage：${err}`)
                 return Promise.reject(err.response);
