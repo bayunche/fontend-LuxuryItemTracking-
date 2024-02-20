@@ -1,61 +1,61 @@
-import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { Card, Title, Paragraph, Avatar } from 'react-native-paper';
+// Banner.tsx
+import React, { memo } from 'react';
+import { View, StyleSheet, Dimensions, TouchableOpacity, ImageBackground } from 'react-native';
+import { Title, Paragraph } from 'react-native-paper';
+import FastImage from 'react-native-fast-image'; // If you've chosen to use react-native-fast-image for caching
 
-// Define the shape of the data for each collection
-type CollectionItem = {
-  id: string;
-  name: string;
-  floorPrice: number;
-  volume: number;
-  volumeChange: number;
-  isVerified: boolean;
+interface BannerProps {
+  title: string;
+  subtitle: string;
   imageUrl: string;
-};
+  onPress: () => void; // Define the type of your onPress function
+}
 
-// Mock data array to simulate the data we would receive from an API
-const mockData: CollectionItem[] = [
-  // Populate with mock data based on the image provided
-];
-
-// Define a component for rendering each item in the banner using React Native Paper components
-const BannerItem: React.FC<{ item: CollectionItem }> = ({ item }) => {
-  const volumeChangeColor = item.volumeChange < 0 ? 'red' : 'green';
-  const verifiedIcon = item.isVerified ? 'check-decagram' : 'alert-circle-outline'; // Placeholder for verified icon
+const Banner = memo(({ title, subtitle, imageUrl, onPress }: BannerProps) => {
+  // Function to handle press event, this could be passed down as a prop as well
+  const onPressHandler = () => {
+    // Placeholder for your onPress event handling logic
+    onPress();
+  };
 
   return (
-    <Card style={styles.card}>
-      <Card.Cover source={{ uri: item.imageUrl }} />
-      <Card.Content>
-        <Title>{item.name}</Title>
-        <Paragraph>Floor Price: {item.floorPrice} ETH</Paragraph>
-        <Paragraph style={{ color: volumeChangeColor }}>
-          {item.volumeChange < 0 ? '' : '+'}{item.volumeChange}%
-        </Paragraph>
-      </Card.Content>
-      <Avatar.Icon size={24} icon={verifiedIcon} />
-    </Card>
+    <TouchableOpacity onPress={onPressHandler} activeOpacity={0.7}>
+      <ImageBackground source={{ uri: imageUrl }} style={styles.image}>
+        <View style={styles.overlay}>
+          <Title style={styles.title}>{title}</Title>
+          <Paragraph style={styles.subtitle}>{subtitle}</Paragraph>
+        </View>
+      </ImageBackground>
+    </TouchableOpacity>
   );
-};
+}, arePropsEqual);
 
-// Define the main banner component
-const HomeBanner: React.FC = () => {
-  return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      {mockData.map(item => (
-        <BannerItem key={item.id} item={item} />
-      ))}
-    </ScrollView>
-  );
-};
+// Add a function to determine if props are equal to prevent unnecessary re-renders
+function arePropsEqual(prevProps: BannerProps, nextProps: BannerProps) {
+  return prevProps.imageUrl === nextProps.imageUrl &&
+         prevProps.title === nextProps.title &&
+         prevProps.subtitle === nextProps.subtitle;
+}
 
-// StyleSheet for the component
+// Styles for the banner
 const styles = StyleSheet.create({
-  card: {
-    // Style for the card
-    marginRight: 10, // Add space between cards
+  image: {
+    width: '100%',
+    height: Dimensions.get('window').width * 0.5625, // 16:9 aspect ratio
+    justifyContent: 'flex-end',
   },
-  // ... Additional styles if needed
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent overlay for text readability
+    padding: 16,
+  },
+  title: {
+    color: 'white',
+    fontSize: 24,
+  },
+  subtitle: {
+    color: 'white',
+    fontSize: 16,
+  },
 });
 
-export default HomeBanner;
+export default Banner;

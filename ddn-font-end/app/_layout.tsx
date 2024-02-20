@@ -31,13 +31,13 @@ export const unstable_settings = {
   initialRouteName: "onBoardingScreen",
 };
 import { RootSiblingParent } from "react-native-root-siblings";
-import { getUserInfos } from "E:/练习与资料/ddn font/dev/fontend-LuxuryItemTracking-/ddn-font-end/api/login";
+import { getUserInfos } from "E:/fontend-LuxuryItemTracking-/ddn-font-end/api/login";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("E:/练习与资料/ddn font/dev/fontend-LuxuryItemTracking-/ddn-font-end/assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require("E:/fontend-LuxuryItemTracking-/ddn-font-end/assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
   const [appIsReady, setAppIsReady] = useState<boolean | undefined>(false);
