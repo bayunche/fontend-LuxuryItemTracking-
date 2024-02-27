@@ -17,7 +17,7 @@ import {
   Spinner,
   Text,
 } from "@ui-kitten/components";
-import { login } from "../api/login";
+import { login } from "D:/fontend-LuxuryItemTracking-/ddn-font-end/api/login";
 import Toast from "react-native-root-toast";
 
 const { width, height } = Dimensions.get("window");
@@ -59,7 +59,7 @@ const LoginRoot = () => {
         animation: true,
       });
       router.push("/(tabs)/homeScreen"); // 登录成功后跳转到主页
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       console.error(err);
     } finally {

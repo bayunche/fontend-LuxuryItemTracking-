@@ -57,7 +57,14 @@ export default function SignupRoot() {
     router.replace("/login");
        
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      Toast.show("注册失败",{
+        hideOnPress: true,
+        duration: Toast.durations.SHORT,
+        shadow: true,
+        position: Toast.positions.BOTTOM,
+        delay: 0,
+      })
     } finally {
       setSignDisabled(false); // 登录按钮
     }

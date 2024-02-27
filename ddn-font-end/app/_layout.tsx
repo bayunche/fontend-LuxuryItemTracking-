@@ -20,6 +20,7 @@ import {
   Layout,
   Text,
 } from "@ui-kitten/components";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 export {
   // Catch any errors thrown by the Layout component.
@@ -28,16 +29,16 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "onBoardingScreen",
+  initialRouteName: "/(tabs)/homeScreen",
 };
 import { RootSiblingParent } from "react-native-root-siblings";
-import { getUserInfos } from "E:/fontend-LuxuryItemTracking-/ddn-font-end/api/login";
+import { getUserInfos } from "D:/fontend-LuxuryItemTracking-/ddn-font-end/api/login";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("E:/fontend-LuxuryItemTracking-/ddn-font-end/assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require("D:/fontend-LuxuryItemTracking-/ddn-font-end/assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
   const [appIsReady, setAppIsReady] = useState<boolean | undefined>(false);
@@ -61,23 +62,16 @@ export default function RootLayout() {
     }
   };
   const getUserInfo = async () => {
-    getUserInfos()
-      .then(async (res: any) => {
-        try {
-          await AsyncStorage.setItem("userInfo", JSON.stringify(res.data));
-        } catch (error) {
-         console.log(error)
-        }
-        setRoot("Tab"); // 主页
-        router.replace("/(tabs)/homeScreen");
-      })
-      .catch(() => {
-        setRoot("LaunchScreen"); // 登录页
-        router.replace("/login");
-      })
-      .finally(() => {
-        setAppIsReady(true);
-      });
+    try {
+      let res = await getUserInfos();
+      await AsyncStorage.setItem("userInfo", JSON.stringify(res.data));
+      setRoot("Tab"); // 主页
+      router.replace("/(tabs)/homeScreen");
+    } catch (error) {
+      console.log(error);
+      setRoot("login"); // 登录页
+      router.replace("/login");
+    }
   };
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
@@ -95,7 +89,11 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <PaperProvider>
+      <RootLayoutNav />
+    </PaperProvider>
+  );
 }
 // const HomeScreen = () => {
 //   return (
@@ -115,16 +113,21 @@ function RootLayoutNav() {
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={eva.light}>
           <PaperProvider>
-            <Stack>
-              <Stack.Screen
-                name="onBoardingScreen"
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen name="login" options={{ headerShown: false }} />
-              <Stack.Screen name="signUp" options={{ headerShown: false }} />
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-            </Stack>
+            <SafeAreaProvider>
+              <Stack>
+                <Stack.Screen
+                  name="onBoardingScreen"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen name="login" options={{ headerShown: false }} />
+                <Stack.Screen name="signUp" options={{ headerShown: false }} />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="modal"
+                  options={{ presentation: "modal" }}
+                />
+              </Stack>
+            </SafeAreaProvider>
           </PaperProvider>
         </ApplicationProvider>
       </ThemeProvider>

@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "expo": "^49.0.21",
+    "expo-image": "^1.10.6",
     "lottie-react-native": "5.1.6",
+    "react-native-paper": "^5.12.3",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "13.9.0"
   },

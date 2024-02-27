@@ -28,10 +28,11 @@ export class Request {
                 // 一般会请求拦截里面加token，用于后端的验证
                 const token = await AsyncStorage.getItem('authToken')
 
+
                 if (token) {
                     config.headers = config.headers || {};
                     // 注意使用Bearer + token拼接
-                    config.headers.Authorization = "Bearer " + token;
+                    config.headers.Authorization =  token;
                 }
                 if (config.method === "get" && config.params) {
                     let url = config.url + "?" + tansParams(config.params);
