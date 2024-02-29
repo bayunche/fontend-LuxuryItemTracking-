@@ -9,12 +9,15 @@ import {
 import Swiper from "react-native-swiper";
 import BlockchainLuxuryApp from "D:/fontend-LuxuryItemTracking-/ddn-font-end/components/SearchScreen";
 import APPbars from "D:/fontend-LuxuryItemTracking-/ddn-font-end/components/AppBar";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function Search() {
   return (
     <View style={styles.container}>
       <APPbars />
-      <BlockchainLuxuryApp></BlockchainLuxuryApp>
+      <ScrollView horizontal={false} keyboardDismissMode={"on-drag"} keyboardShouldPersistTaps={'handled'} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={true} iosalwaysBounceHorizontal={false} iosalwaysBounceVertical={false}  iosbounces= {true}     >
+    <BlockchainLuxuryApp/>
+      </ScrollView>
     </View>
   );
 }

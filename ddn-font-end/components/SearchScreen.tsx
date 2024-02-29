@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    
   },
   searchbar: {
     margin: 8,
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: 20,
-    alignSelf: 'center',
+    alignSelf: 'auto',
   },
   bottomNavigation: {
     backgroundColor: 'transparent',
