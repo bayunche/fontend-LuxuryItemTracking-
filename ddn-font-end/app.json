@@ -7,6 +7,12 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
+    "jspackagerOpts":{
+      "sourceExts": [".js", ".jsx", ".ts", ".tsx", ".android.js", ".android.jsx", ".ios.js", ".ios.jsx"]
+    },
+    "packagerOpts":{
+       "assetExts": [".bmp", ".gif", ".jpg", ".jpeg", ".png", ".webp","ttf", "mp4"]
+    },
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
