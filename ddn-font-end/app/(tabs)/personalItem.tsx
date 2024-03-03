@@ -2,28 +2,23 @@ import { StyleSheet } from "react-native";
 
 // import EditScreenInfo from "../../components/EditScreenInfo";
 import { Text, View } from "../../components/Themed";
-import HomeScreenList from "../../components/HomeScreen";
-
-export default function HomeScreen() {
+import ItemsView from "../../components/Items";
+import APPbars from "../../components/AppBar";
+// import HomeScreenList from "../../components/HomeScreen";
+export default function PersonalItem() {
   return (
+ 
     <View style={styles.container}>
-      <HomeScreenList />
+     
+        <ItemsView></ItemsView>
+     
     </View>
+  
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
 });

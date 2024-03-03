@@ -4,12 +4,13 @@ import { StyleSheet } from "react-native";
 import {
   Text,
   View,
-} from "D:/fontend-LuxuryItemTracking-/ddn-font-end/components/Themed";
+} from "../../components/Themed";
 
 import Swiper from "react-native-swiper";
-import BlockchainLuxuryApp from "D:/fontend-LuxuryItemTracking-/ddn-font-end/components/SearchScreen";
-import APPbars from "D:/fontend-LuxuryItemTracking-/ddn-font-end/components/AppBar";
+
 import { ScrollView } from "react-native-gesture-handler";
+import BlockchainLuxuryApp from "../../components/SearchScreen";
+import APPbars from "../../components/AppBar";
 
 export default function Search() {
   return (

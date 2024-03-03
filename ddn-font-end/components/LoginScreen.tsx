@@ -17,7 +17,7 @@ import {
   Spinner,
   Text,
 } from "@ui-kitten/components";
-import { login } from "D:/fontend-LuxuryItemTracking-/ddn-font-end/api/login";
+import { login } from "../api/login";
 import Toast from "react-native-root-toast";
 
 const { width, height } = Dimensions.get("window");

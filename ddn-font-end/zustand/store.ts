@@ -13,6 +13,14 @@ interface useUserState {
     removeUserInfo: (by: any) => void
 }
 
+interface useItemInfoState {
+    setItemId: (by: string) => void,
+    itemId: string,
+    setItemInfo: (by: object) => void,
+    itemInfo: object,
+    removeItemInfo: (by: object) => void,
+}
+
 const useUserStore = create<useUserState>((set) => ({
     userId: "",
     setUserId: (id: string) => set(() => ({ userId: id })),
@@ -35,5 +43,13 @@ const useUserStore = create<useUserState>((set) => ({
     // }
 
 }))
+const useItemStore = create<useItemInfoState>((set) => ({
+    itemId: "",
+    setItemId: (id: string) => set(() => ({ itemId: id })),
+    setItemInfo: (by: object) => set(() => ({ itemInfo: by })),
+    itemInfo: {},
+    removeItemInfo: (by: object) => set(() => ({ itemInfo: {} })),
+}
+))
 
-export { useUserStore};
+export { useUserStore,useItemStore };

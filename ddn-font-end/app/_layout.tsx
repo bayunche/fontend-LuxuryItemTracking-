@@ -32,13 +32,13 @@ export const unstable_settings = {
   initialRouteName: "/(tabs)/homeScreen",
 };
 import { RootSiblingParent } from "react-native-root-siblings";
-import { getUserInfos } from "D:/fontend-LuxuryItemTracking-/ddn-font-end/api/login";
+import { getUserInfos } from "../api/login";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("D:/fontend-LuxuryItemTracking-/ddn-font-end/assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
   const [appIsReady, setAppIsReady] = useState<boolean | undefined>(false);
