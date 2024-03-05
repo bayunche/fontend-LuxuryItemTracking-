@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { login } from "../api/login";
+// import { login } from "../api/login";
 
 interface useUserState {
     userId: string,
@@ -19,6 +19,7 @@ interface useItemInfoState {
     setItemInfo: (by: object) => void,
     itemInfo: object,
     removeItemInfo: (by: object) => void,
+    getItemInfo:(by: object)=> void,
 }
 
 const useUserStore = create<useUserState>((set) => ({

@@ -8,7 +8,7 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
-import OnboradingScreen from "../components/OnboradingScreen";
+// import OnboradingScreen from "../components/OnboradingScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // 异步存取的三方工具
 import { router } from "expo-router";
@@ -122,6 +122,8 @@ function RootLayoutNav() {
                 <Stack.Screen name="login" options={{ headerShown: false }} />
                 <Stack.Screen name="signUp" options={{ headerShown: false }} />
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="viewItems" options={{ headerShown: false }} />
+              
                 <Stack.Screen
                   name="modal"
                   options={{ presentation: "modal" }}
