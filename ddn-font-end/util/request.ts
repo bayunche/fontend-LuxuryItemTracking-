@@ -6,6 +6,7 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import Toast from 'react-native-root-toast';
 import { tansParams } from '../util/paramsEdit';
 import { router } from "expo-router";
+// import { err } from 'react-native-svg/lib/typescript/xml';
 
 type Result<T> = {
     // code: number;
@@ -44,7 +45,7 @@ export class Request {
             },
             (err: any) => {
                 // 请求错误，这里可以用reactNativeToast进行提示
-                Toast.show(`Request failed to send ErrorMessage：${err}`)
+                Toast.show(`${err}`)
                 return Promise.reject(err);
             }
         );
@@ -57,6 +58,10 @@ export class Request {
                 if (res.headers.authorization) {
                     await AsyncStorage.setItem('authToken', res.headers.authorization)
                 }
+                if (res.data.status=="refuse") {
+                    return Promise.reject(res.data.msg)
+                }
+         
                 return res;
             },
             (err: any) => {
@@ -77,6 +82,7 @@ export class Request {
 
                     return Promise.reject(err);
                 }
+          
                 // 这里是AxiosError类型，所以一般我们只reject我们需要的响应即可
                 Toast.show(`Request failed to send ErrorMessage：${err}`)
                 return Promise.reject(err.response);
