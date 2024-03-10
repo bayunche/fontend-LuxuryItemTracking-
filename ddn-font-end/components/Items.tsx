@@ -10,6 +10,7 @@ import {
   Title,
   Modal,
   TextInput,
+  Dialog,
 } from "react-native-paper";
 import APPbars from "./AppBar";
 import LottieView from "lottie-react-native";
@@ -23,7 +24,8 @@ import DateTimePicker, { DateType, ModeType } from "react-native-ui-datepicker";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 const { width, height } = Dimensions.get("window");
-
+import * as imagePicker from "expo-image-picker";
+import Toast from "react-native-root-toast";
 // Title
 // Avatar
 // Paragraph
@@ -91,14 +93,31 @@ function Views() {
   const showPayModal = () => setVisiblePay(true);
   const hidePayModal = () => setVisiblePay(false);
   const [itemName, setItemName] = useState("");
-  const [date, setDate] = useState<DateType | undefined>(dayjs());
+  const [itemDate, setItemDate] = useState<DateType | undefined>(dayjs());
+  const [itemImage, setItemImage] = useState(String || null || undefined);
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const hideDialog = () => setDialogVisible(false);
+  const [select, setSelect] = useState(Boolean);
+  const [initalLoad, setInitalLoad] = useState(true);
 
   const containerStyle = { backgroundColor: "white", padding: 20 };
   const { itemList, getItemList } = useItemStore((state) => ({
     itemList: state.itemList,
     getItemList: state.getItemList,
   }));
-
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    try {
+      //  await imagePicker.useCameraPermissions()
+      //  await  imagePicker.useMediaLibraryPermissions()
+      setInitalLoad(false);
+      setDialogVisible(true);
+      
+      // console.log(photo.assets[0].base64 || null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   let value = 0;
   if (itemList.length > 0) {
     value = itemList.reduce((acc: any, shoe: any) => acc + shoe.value, 0);
@@ -110,7 +129,54 @@ function Views() {
   const handleView = () => {
     router.push("/viewItems");
   };
+  const handleResign = () => {
+    let data = { itemName, itemImage, itemDate };
+    if (itemName=="" || itemImage=="" || itemDate=="") {
+      return Toast.show("请完整填写表单",{
+       duration: Toast.durations.SHORT,
+       position: Toast.positions.BOTTOM,
+       shadow: true,
+       animation: true,
+       hideOnPress: true,
+      })
+    }
+    // console.log(data);
+  };
+  useEffect(() => {
+    const openImagePickerAsync = async () => {
+      try {
+        if (dialogVisible == false && initalLoad == false) {
+          if (select == false) {
+            let photo = await imagePicker.launchCameraAsync({
+              mediaTypes: imagePicker.MediaTypeOptions.All,
+              allowsEditing: true,
+              // aspect: [4, 3],
+              base64: true,
+              quality: 1,
+            });
 
+            if (!photo.canceled) {
+              setItemImage(photo.assets[0].base64);
+            }
+          } else {
+            const result = await imagePicker.launchImageLibraryAsync({
+              mediaTypes: imagePicker.MediaTypeOptions.All,
+              allowsEditing: true,
+              aspect: [4, 3],
+              base64: true,
+              quality: 1,
+            });
+            if (!result.canceled) {
+              setItemImage(result.assets[0].base64);
+            }
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    openImagePickerAsync();
+  }, [ dialogVisible,select]);
   useFocusEffect(
     useCallback(() => {
       const params = {
@@ -128,20 +194,70 @@ function Views() {
           onDismiss={hideModal}
           contentContainerStyle={containerStyle}
         >
-          <Title>认证奢侈品</Title>
+          <ScrollView style={styles.resignModel}>
+            <View style={styles.wrap}>
+              <Title style={{ textAlign: "center", marginBottom: 16 }}>
+                认证奢侈品
+              </Title>
+              <TextInput
+                label="奢侈品名称"
+                value={itemName}
+                style={{ marginBottom: 16 }}
+                onChangeText={(text) => setItemName(text)}
+              />
+              <View style={{ backgroundColor: "#f7f5fa", borderRadius: 10 }}>
+                <DateTimePicker
+                  mode="single"
+                  locale={"zh-cn"}
+                  date={itemDate}
+                  onChange={(params) => setItemDate(params.date)}
+                />
+              </View>
 
-          <TextInput
-            label="Email"
-            value={itemName}
-            onChangeText={(text) => setItemName(text)}
-          />
-          <DateTimePicker
-            mode="single"
-            locale={"zh-cn"}
-            date={date}
-            onChange={(params) => setDate(params.date)}
-          />
+              <Button
+                mode="contained"
+                style={{
+                  marginTop: 16,
+                  backgroundColor: "#b19cd9",
+                  marginBottom: 16,
+                }}
+                onPress={pickImage}
+              >
+                点击上传图片
+              </Button>
+              <Button
+                mode="contained"
+                style={{ backgroundColor: "#b19cd9" }}
+                onPress={handleResign}
+              >
+                提交认证
+              </Button>
+            </View>
+          </ScrollView>
         </Modal>
+      </Portal>
+      <Portal>
+        <Dialog visible={dialogVisible} onDismiss={hideDialog}>
+          <Dialog.Actions>
+            <Button
+              onPress={() => {
+                setSelect(true);
+                setDialogVisible(false);
+              }}
+            >
+              照片
+            </Button>
+            <Button
+              onPress={() => {
+                setSelect(false);
+                setDialogVisible(false);
+
+              }}
+            >
+              拍摄
+            </Button>
+          </Dialog.Actions>
+        </Dialog>
       </Portal>
       <RegisterUserModal
         visible={visiblePay}
@@ -254,5 +370,17 @@ const styles = StyleSheet.create({
     boxShadow: "2px 4px 8px rgba(0, 0, 0, 0.123)",
     width: "44.8%",
     // Additional styling
+  },
+  resignModel: {
+    // flex: 1,
+    height: "30%",
+    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.123)",
+    borderRadius: 10,
+  },
+  wrap: {
+    padding: 10,
+    textAlign: "center",
+    backgroundColor: "#f7f7f6",
+    borderRadius: 10,
   },
 });
