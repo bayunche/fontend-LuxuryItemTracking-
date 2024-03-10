@@ -36,7 +36,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -44,11 +46,14 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.webp",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.bayunche.ddnfontend"
     },
     "build": {
       "babel": {
-        "include": ["@ui-kitten/components"]
+        "include": [
+          "@ui-kitten/components"
+        ]
       }
     },
     "web": {
@@ -78,6 +83,5 @@
     },
     "owner": "bayunche"
   },
-  // "baseUrl": "http://8.134.196.44:3101"
   "baseUrl": "http://8.134.196.44:3101"
 }
