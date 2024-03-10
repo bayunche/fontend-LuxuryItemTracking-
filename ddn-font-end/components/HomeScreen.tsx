@@ -9,7 +9,7 @@ const bannerData = [
   {
     title: "Banner 1",
     description: "Floor: 0.03 ETH",
-    url: "https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/9e232f5ea1db3fbe4d3da3893a0d566ffc0647cb/ddn-font-end/assets/images/banner-1.webp?raw=true",
+    url: "https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/dd873ecea3fdc15e3f13e851635b226e32b4ae10/ddn-font-end/assets/images/116752505_p0_master1200.jpg?raw=true",
     onPress: () => {
       // 处理点击事件
     },
