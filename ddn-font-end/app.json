@@ -4,7 +4,7 @@
     "slug": "ddn-font-end",
     "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.webp",
+    "icon": "./assets/images/imageonline-co-convertedpngimage.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "jspackagerOpts": {
@@ -44,7 +44,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.webp",
+        "foregroundImage": "./assets/images/imageonline-co-convertedpngimage.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.bayunche.ddnfontend"
