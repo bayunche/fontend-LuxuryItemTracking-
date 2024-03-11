@@ -15,3 +15,7 @@ export async function getItemDetail(params: object) {
 export async function registerLuxuryUser(params: object) {
     return await request.get('/user/certifiedUser',params)
 }
+
+export async function registerLuxuryItem(data: object) {
+    return await request.post('/certify/mintLuxuryItem', data)
+}

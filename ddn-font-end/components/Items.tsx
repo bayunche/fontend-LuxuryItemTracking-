@@ -18,7 +18,7 @@ import { router, useFocusEffect } from "expo-router";
 import { useItemStore } from "../zustand/store";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "react-native-paper";
-import { registerLuxuryUser } from "../api/item";
+import { registerLuxuryItem, registerLuxuryUser } from "../api/item";
 import RegisterUserModal from "./registerUser";
 import DateTimePicker, { DateType, ModeType } from "react-native-ui-datepicker";
 import dayjs from "dayjs";
@@ -112,7 +112,7 @@ function Views() {
       //  await  imagePicker.useMediaLibraryPermissions()
       setInitalLoad(false);
       setDialogVisible(true);
-      
+
       // console.log(photo.assets[0].base64 || null);
     } catch (error) {
       console.log(error);
@@ -129,18 +129,26 @@ function Views() {
   const handleView = () => {
     router.push("/viewItems");
   };
-  const handleResign = () => {
+  const handleResign = async () => {
     let data = { itemName, itemImage, itemDate };
-    if (itemName=="" || itemImage=="" || itemDate=="") {
-      return Toast.show("请完整填写表单",{
-       duration: Toast.durations.SHORT,
-       position: Toast.positions.BOTTOM,
-       shadow: true,
-       animation: true,
-       hideOnPress: true,
-      })
+
+    if (itemName == "" || itemImage == "" || itemDate == "") {
+      return Toast.show("请完整填写表单", {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+      });
     }
     // console.log(data);
+
+    try {
+      let res = registerLuxuryItem(data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     const openImagePickerAsync = async () => {
@@ -162,7 +170,7 @@ function Views() {
             const result = await imagePicker.launchImageLibraryAsync({
               mediaTypes: imagePicker.MediaTypeOptions.All,
               allowsEditing: true,
-              aspect: [4, 3],
+              // aspect: [4, 3],
               base64: true,
               quality: 1,
             });
@@ -176,7 +184,7 @@ function Views() {
       }
     };
     openImagePickerAsync();
-  }, [ dialogVisible,select]);
+  }, [dialogVisible, select]);
   useFocusEffect(
     useCallback(() => {
       const params = {
@@ -251,7 +259,6 @@ function Views() {
               onPress={() => {
                 setSelect(false);
                 setDialogVisible(false);
-
               }}
             >
               拍摄
