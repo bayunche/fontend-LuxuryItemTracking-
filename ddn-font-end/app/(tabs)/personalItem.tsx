@@ -7,13 +7,9 @@ import APPbars from "../../components/AppBar";
 // import HomeScreenList from "../../components/HomeScreen";
 export default function PersonalItem() {
   return (
- 
     <View style={styles.container}>
-     
-        <ItemsView></ItemsView>
-     
+      <ItemsView></ItemsView>
     </View>
-  
   );
 }
 
