@@ -1,6 +1,6 @@
 import { View } from "./Themed";
 
-import { Text, StyleSheet, Dimensions } from "react-native";
+import { Text, StyleSheet, Dimensions, Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
   Avatar,
@@ -11,6 +11,8 @@ import {
   Modal,
   TextInput,
   Dialog,
+  MD2Colors,
+  ActivityIndicator,
 } from "react-native-paper";
 import APPbars from "./AppBar";
 import LottieView from "lottie-react-native";
@@ -26,6 +28,9 @@ import "dayjs/locale/zh-cn";
 const { width, height } = Dimensions.get("window");
 import * as imagePicker from "expo-image-picker";
 import Toast from "react-native-root-toast";
+import { base64ToBlob } from "../util/util";
+
+// MD2Colors
 // Title
 // Avatar
 // Paragraph
@@ -99,8 +104,8 @@ function Views() {
   const hideDialog = () => setDialogVisible(false);
   const [select, setSelect] = useState(Boolean);
   const [initalLoad, setInitalLoad] = useState(true);
-
   const containerStyle = { backgroundColor: "white", padding: 20 };
+  const [loading, setLoading] = useState(false);
   const { itemList, getItemList } = useItemStore((state) => ({
     itemList: state.itemList,
     getItemList: state.getItemList,
@@ -124,11 +129,18 @@ function Views() {
   }
   let itemsList = [];
   if (itemList.length > 0) {
-    itemsList = itemList.reduce((acc: any, shoe: any) => acc + shoe.value, 0);
+    // itemsList = itemList.reduce(
+    //   (acc: any, shoe: any) => acc + parseInt(shoe.value),
+    //   0
+    // );
+    console.log(itemList[0].itemImage);
   }
-  const handleView = () => {
-    router.push("/viewItems");
+  const base64ToGallery = async (base64String: any) => {};
+  const handleView = (items: any) => {
+    // router.push("/viewItems");
+    console.log(items);
   };
+
   const handleResign = async () => {
     let data = { itemName, itemImage, itemDate };
 
@@ -144,11 +156,27 @@ function Views() {
     // console.log(data);
 
     try {
-      let res = registerLuxuryItem(data);
+      setLoading(true);
+      let res: any = await registerLuxuryItem(data);
       console.log(res);
-    } catch (error) {
+      Toast.show(`${res.msg}`, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+      });
+    } catch (error: any) {
       console.log(error);
+      Toast.show(`${error.msg}`, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+      });
     }
+    setLoading(false);
   };
   useEffect(() => {
     const openImagePickerAsync = async () => {
@@ -190,7 +218,7 @@ function Views() {
       const params = {
         /* 你的参数 */
       };
-      getItemList(params);
+      itemsList = getItemList(params);
     }, [])
   );
 
@@ -241,6 +269,7 @@ function Views() {
                 提交认证
               </Button>
             </View>
+            <ActivityIndicator animating={loading} color={MD2Colors.red800} />
           </ScrollView>
         </Modal>
       </Portal>
@@ -308,14 +337,15 @@ function Views() {
         </View>
 
         <View style={styles.shoesContainer}>
-          {itemsList.map((shoe: any) => (
+          {itemList.map((shoe: any) => (
             <Card key={shoe.id} style={styles.shoeCard} onPress={handleView}>
-              <Card.Cover source={{ uri: shoe.imageUri }} />
+              <Card.Cover source={{ uri: 'data:image/jpeg;base64,'+shoe.itemImage }} />
               <Card.Content>
-                <Paragraph>品名 {shoe.name}</Paragraph>
-                <Paragraph>注册时间 {shoe.auctionDate}</Paragraph>
+                <Paragraph>品名 {shoe.itemName}</Paragraph>
+                <Paragraph>注册时间 {shoe.itemDate}</Paragraph>
               </Card.Content>
             </Card>
+        
           ))}
         </View>
       </ScrollView>
