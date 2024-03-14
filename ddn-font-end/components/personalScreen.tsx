@@ -26,6 +26,7 @@ function UserAvatar() {
 function Header() {
   return (
     <View style={styles.header}>
+      <UserAvatar></UserAvatar>
       <FAB
         icon="share"
         style={styles.fab}
