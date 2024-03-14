@@ -10,12 +10,13 @@ function UserAvatar() {
     userInfo: state.userInfo,
     setUserInfo: state.setUserInfo,
   }));
-
+  console.log(userInfo)
   if (userInfo.avatar == null) {
-    let label = userInfo.name
-      .split(" ")
-      .map((x: string) => x.charAt(0).toUpperCase())
-      .join("");
+    // let label = userInfo.userName
+    //   .split(" ")
+    //   .map((x: string) => x.charAt(0).toUpperCase())
+    //   .join("");
+    let label="RN"
     return <Avatar.Text size={24} label={label} />;
   } else {
     let url = userInfo.avatar;
@@ -37,6 +38,7 @@ function Header() {
         style={styles.fab}
         onPress={() => console.log("Pressed")}
       />
+      <UserAvatar/>
     </View>
   );
 }

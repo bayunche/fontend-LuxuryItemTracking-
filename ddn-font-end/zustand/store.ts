@@ -59,9 +59,8 @@ const useItemStore = create<useItemInfoState>((set) => ({
         console.log(params)
         try {
             let info: any = await getListItem(params)
-            set(() => ({ itemList: info.data }))
-            result = info.data
-            console.log(result)
+            result =await info.data.data
+            set(() => ({ itemList:  result }))
 
         } catch (error) {
             console.log(error)
