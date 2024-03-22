@@ -133,12 +133,12 @@ function Views() {
     //   (acc: any, shoe: any) => acc + parseInt(shoe.value),
     //   0
     // );
-    console.log(itemList[0].itemImage);
   }
   const base64ToGallery = async (base64String: any) => {};
-  const handleView = (items: any) => {
+  const handleView = (serialNumber: any) => {
     // router.push("/viewItems");
-    console.log(items);
+    console.log(serialNumber);
+    router.push
   };
 
   const handleResign = async () => {
@@ -338,14 +338,22 @@ function Views() {
 
         <View style={styles.shoesContainer}>
           {itemList.map((shoe: any) => (
-            <Card key={shoe.id} style={styles.shoeCard} onPress={handleView}>
-              <Card.Cover source={{ uri: 'data:image/jpeg;base64,'+shoe.itemImage }} />
+            <Card
+              key={shoe.id}
+              style={styles.shoeCard}
+              onPress={() => {
+                let {serialNumber,...data}=shoe
+                handleView(serialNumber);
+              }}
+            >
+              <Card.Cover
+                source={{ uri: "data:image/jpeg;base64," + shoe.itemImage }}
+              />
               <Card.Content>
                 <Paragraph>品名 {shoe.itemName}</Paragraph>
                 <Paragraph>注册时间 {shoe.itemDate}</Paragraph>
               </Card.Content>
             </Card>
-        
           ))}
         </View>
       </ScrollView>

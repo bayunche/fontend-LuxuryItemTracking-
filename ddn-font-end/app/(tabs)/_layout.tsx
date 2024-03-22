@@ -48,7 +48,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="search"
         options={{
-          title: "搜索",
+          title: "物品溯源",
           headerShadowVisible: false,
           tabBarIcon: ({ color }) => (
             <AntDesign name="search1" size={24} color={color} />

@@ -19,6 +19,7 @@ export default function Search() {
       <ScrollView horizontal={false} keyboardDismissMode={"on-drag"} keyboardShouldPersistTaps={'handled'} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={true} iosalwaysBounceHorizontal={false} iosalwaysBounceVertical={false}  iosbounces= {true}     >
     <BlockchainLuxuryApp/>
       </ScrollView>
+
     </View>
   );
 }

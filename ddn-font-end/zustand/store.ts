@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { getItemDetail, getListItem } from '../api/item';
+import { getUserInfos } from '../api/login';
 // import { login } from "../api/login";
 
 interface useUserState {
@@ -12,6 +13,7 @@ interface useUserState {
     userInfo: any,
     setUserInfo: (by: any) => void,
     removeUserInfo: (by: any) => void
+    getUserInfo: (by: any) => object,
 }
 
 interface useItemInfoState {
@@ -23,6 +25,14 @@ interface useItemInfoState {
     getItemInfo: (by: object) => object,
     itemList: any[],
     getItemList: (by: object) => any,
+}
+
+type res = {
+    data: object,
+
+}
+type info = {
+    data: object
 }
 
 const useUserStore = create<useUserState>((set) => ({
@@ -45,6 +55,14 @@ const useUserStore = create<useUserState>((set) => ({
     //     })
     //     return result;
     // }
+    getUserInfo: async (by: object) => {
+        let res = await getUserInfos()
+        console.log(res.data)
+        let info: any = res.data
+        console.log(info.data)
+        set(()=> ({ userInfo: info.data }))
+        return info.data
+    },
 
 }))
 const useItemStore = create<useItemInfoState>((set) => ({
@@ -59,8 +77,8 @@ const useItemStore = create<useItemInfoState>((set) => ({
         console.log(params)
         try {
             let info: any = await getListItem(params)
-            result =await info.data.data
-            set(() => ({ itemList:  result }))
+            result = await info.data.data
+            set(() => ({ itemList: result }))
 
         } catch (error) {
             console.log(error)
