@@ -36,9 +36,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -51,9 +49,7 @@
     },
     "build": {
       "babel": {
-        "include": [
-          "@ui-kitten/components"
-        ]
+        "include": ["@ui-kitten/components"]
       }
     },
     "web": {
@@ -62,7 +58,14 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      "expo-barcode-scanner",
       "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+        }
+      ],
       [
         "expo-image-picker",
         {

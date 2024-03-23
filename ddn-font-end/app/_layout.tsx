@@ -65,6 +65,7 @@ export default function RootLayout() {
     try {
       let res = await getUserInfos();
       await AsyncStorage.setItem("userInfo", JSON.stringify(res.data));
+      
       setRoot("Tab"); // 主页
       router.replace("/(tabs)/homeScreen");
     } catch (error) {
@@ -119,11 +120,11 @@ function RootLayoutNav() {
                   name="onBoardingScreen"
                   options={{ headerShown: false }}
                 />
+                <Stack.Screen name="TraceabilityScreen" options={{ headerShown: false }} />
                 <Stack.Screen name="login" options={{ headerShown: false }} />
                 <Stack.Screen name="signUp" options={{ headerShown: false }} />
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 <Stack.Screen name="viewItems" options={{ headerShown: false }} />
-              
                 <Stack.Screen
                   name="modal"
                   options={{ presentation: "modal" }}
