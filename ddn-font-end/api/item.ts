@@ -9,7 +9,7 @@ export async function getListItem(params: object) {
 }
 // 获取物品信息
 export async function getItemDetail(params: object) {
-     return await request.get('/item/getItemDetails',params)
+     return await request.get('/item/getItemDetails',{params})
 }
 // 注册奢侈品
 export async function registerLuxuryUser(params: object) {

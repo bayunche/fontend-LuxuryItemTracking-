@@ -28,19 +28,21 @@ export class Request {
             async (config: AxiosRequestConfig): Promise<any> => {
                 // 一般会请求拦截里面加token，用于后端的验证
                 const token = await AsyncStorage.getItem('authToken')
-
-
                 if (token) {
                     config.headers = config.headers || {};
                     // 注意使用Bearer + token拼接
-                    config.headers.Authorization =  token;
+                    config.headers.Authorization = token;
                 }
+                
+                // get请求映射params
                 if (config.method === "get" && config.params) {
                     let url = config.url + "?" + tansParams(config.params);
                     url = url.slice(0, -1);
                     config.params = {};
                     config.url = url;
                 }
+
+
                 return config;
             },
             (err: any) => {
@@ -58,10 +60,10 @@ export class Request {
                 if (res.headers.authorization) {
                     await AsyncStorage.setItem('authToken', res.headers.authorization)
                 }
-                if (res.data.status=="refuse") {
+                if (res.data.status == "refuse") {
                     return Promise.reject(res.data.msg)
                 }
-         
+
                 return res;
             },
             (err: any) => {
@@ -78,11 +80,11 @@ export class Request {
                 if (err.response.status === 401) {
                     // 这里可以调用router进行重定向到登录页
                     router.replace('/login')
-                Toast.show("登录已过期，请重新登录")
+                    Toast.show("登录已过期，请重新登录")
 
                     return Promise.reject(err);
                 }
-          
+
                 // 这里是AxiosError类型，所以一般我们只reject我们需要的响应即可
                 Toast.show(`Request failed to send ErrorMessage：${err}`)
                 return Promise.reject(err.response);

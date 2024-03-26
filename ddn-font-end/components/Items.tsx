@@ -30,66 +30,6 @@ import * as imagePicker from "expo-image-picker";
 import Toast from "react-native-root-toast";
 import { base64ToBlob } from "../util/util";
 
-// MD2Colors
-// Title
-// Avatar
-// Paragraph
-// Card
-
-// const shoesData = [
-//   {
-//     id: 1,
-//     name: "hasuneMiku",
-//     auctionDate: "2024.03.03",
-//     imageUri:
-//       "https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/c203917aea23a2072907d25367260ae32825eebe/ddn-font-end/assets/images/115907691_p0_master1200.jpg?raw=true",
-//     value: 123,
-//   },
-//   {
-//     id: 2,
-//     name: "hasuneMiku",
-//     auctionDate: "2024.03.03",
-//     imageUri: "your_shoe_image_url_2",
-//     value: 123,
-//   },
-//   {
-//     id: 3,
-//     name: "hasuneMiku",
-//     auctionDate: "2024.03.03",
-//     imageUri: "your_shoe_image_url_2",
-//     value: 123,
-//   },
-//   {
-//     id: 4,
-//     name: "hasuneMiku",
-//     auctionDate: "2024.03.03",
-//     imageUri: "your_shoe_image_url_2",
-//     value: 123,
-//   },
-//   {
-//     id: 5,
-//     name: "hasuneMiku",
-//     auctionDate: "2024.03.03",
-//     imageUri: "your_shoe_image_url_2",
-//     value: 123,
-//   },
-//   {
-//     id: 6,
-//     name: "hasuneMiku",
-//     auctionDate: "2024.03.03",
-//     imageUri: "your_shoe_image_url_2",
-//     value: 123,
-//   },
-//   {
-//     id: 7,
-//     name: "hasuneMiku",
-//     auctionDate: "2024.03.03",
-//     imageUri: "your_shoe_image_url_2",
-//     value: 123,
-//   },
-//   // 添加更多鞋子数据
-// ];
-
 function Views() {
   const [visible, setVisible] = useState(false);
   const [visiblePay, setVisiblePay] = useState(false);
@@ -106,19 +46,19 @@ function Views() {
   const [initalLoad, setInitalLoad] = useState(true);
   const containerStyle = { backgroundColor: "white", padding: 20 };
   const [loading, setLoading] = useState(false);
-  const { itemList, getItemList } = useItemStore((state) => ({
-    itemList: state.itemList,
-    getItemList: state.getItemList,
-  }));
+  const { itemList, getItemList, setItemId, itemId } = useItemStore(
+    (state) => ({
+      itemList: state.itemList,
+      getItemList: state.getItemList,
+      setItemId: state.setItemId,
+      itemId: state.itemId,
+    })
+  );
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     try {
-      //  await imagePicker.useCameraPermissions()
-      //  await  imagePicker.useMediaLibraryPermissions()
       setInitalLoad(false);
       setDialogVisible(true);
-
-      // console.log(photo.assets[0].base64 || null);
     } catch (error) {
       console.log(error);
     }
@@ -135,10 +75,11 @@ function Views() {
     // );
   }
   const base64ToGallery = async (base64String: any) => {};
-  const handleView = (serialNumber: any) => {
+  const handleView = (itemId: string) => {
     // router.push("/viewItems");
-    console.log(serialNumber);
-    router.push
+    setItemId(itemId);
+
+    router.push("/viewItems");
   };
 
   const handleResign = async () => {
@@ -153,7 +94,6 @@ function Views() {
         hideOnPress: true,
       });
     }
-    // console.log(data);
 
     try {
       setLoading(true);
@@ -342,8 +282,8 @@ function Views() {
               key={shoe.id}
               style={styles.shoeCard}
               onPress={() => {
-                let {serialNumber,...data}=shoe
-                handleView(serialNumber);
+                let { itemId, ...data } = shoe;
+                handleView(itemId);
               }}
             >
               <Card.Cover
@@ -375,15 +315,12 @@ const styles = StyleSheet.create({
     // backgroundColor: "#fffccc",
   },
   card: {
-    borderBlockColor: "black",
-    borderStyle: "solid",
-    borderWidth: 1,
+    borderRadius: 16,
     alignItems: "center",
     backgroundColor: "#fffccc",
     justifyContent: "space-between",
     padding: 10,
     boxShadow: "2px 4px 8px rgba(0, 0, 0, 0.123)",
-
     margin: 10,
     flexDirection: "row-reverse",
     flexWrap: "nowrap",
