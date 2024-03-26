@@ -7,7 +7,7 @@ import APPbars from "../components/AppBar";
 
 export default function viewItemScreen() {
   return (
-    <View>
+    <View style={styles.container}>
       <APPbars></APPbars>
 
       <ViewItem></ViewItem>
@@ -15,3 +15,9 @@ export default function viewItemScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

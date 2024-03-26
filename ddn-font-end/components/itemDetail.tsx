@@ -10,8 +10,8 @@ import { itemInfoType, useItemStore } from "../zustand/store";
 import { getItemDetail } from "../api/item";
 import { ScrollView } from "react-native-gesture-handler";
 import { Image } from "expo-image";
-// ScrollView
-
+import { Dimensions } from "react-native";
+const { width } = Dimensions.get("window");
 function itemTitle() {
   const { setItemId, itemId, getItemInfo, itemInfo } = useItemStore(
     (state) => ({
@@ -44,28 +44,35 @@ export default function ViewItem() {
   );
   useEffect(() => {
     setItemInfos(itemInfo);
-    console.log("set");
   }, [itemInfo]);
   useEffect(() => {
     //  console.log(JSON.parse(JSON.stringify(itemInfos)))
   }, [itemInfos]);
   return (
     <View style={styles.container}>
-      {itemInfos?.itemImage && (
-        <ZoomableImage uri={itemInfo.itemImage}></ZoomableImage>
-      )}
-     
-
-      <ScrollView></ScrollView>
+      <ScrollView>
+        <View style={styles.imageWrap}>
+          <Image
+            style={styles.image}
+            source={`data:image/jpeg;base64,${itemInfos?.itemImage}`}
+            contentFit="contain"
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  container: { backgroundColor: "rgb(236, 236, 231)" },
+  imageWrap: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
   },
   image: {
     height: 300,
+    width: width * 0.8,
+    borderRadius: 10,
   },
 });
