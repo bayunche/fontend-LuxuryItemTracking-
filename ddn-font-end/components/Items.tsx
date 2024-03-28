@@ -78,7 +78,6 @@ function Views() {
   const handleView = (itemId: string) => {
     // router.push("/viewItems");
     setItemId(itemId);
-
     router.push("/viewItems");
   };
 
@@ -99,13 +98,16 @@ function Views() {
       setLoading(true);
       let res: any = await registerLuxuryItem(data);
       console.log(res);
-      Toast.show(`${res.msg}`, {
+      Toast.show(`奢侈品注册成功`, {
         duration: Toast.durations.SHORT,
         position: Toast.positions.BOTTOM,
         shadow: true,
         animation: true,
         hideOnPress: true,
       });
+      setLoading(false);
+      hideModal();
+      itemsList = getItemList({});
     } catch (error: any) {
       console.log(error);
       Toast.show(`${error.msg}`, {
