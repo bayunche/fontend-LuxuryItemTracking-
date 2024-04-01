@@ -50,6 +50,7 @@ type itemInfoType= {
     TransportWay: string;
     TransportNumber: number | string;
     TransportCompany: string;
+    TransportDate:string;
     updater: string;
     blockNumber: bigint;
     transactionHash: string;

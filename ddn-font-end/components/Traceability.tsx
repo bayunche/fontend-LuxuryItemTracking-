@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import ViewItem from "./itemDetail";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Camera, CameraType } from "expo-camera";
+import { useItemStore } from "../zustand/store";
+import { router } from "expo-router";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
+const { width: SCREEN_WIDTH,height } = Dimensions.get("window");
 
 
 // useEffect
@@ -19,6 +21,15 @@ function Scanner() {
   const [permission, requestCameraPermission] = Camera.useCameraPermissions();
   const [permissionResponse, requestPermission] =
     BarCodeScanner.usePermissions();
+
+    const { setItemId, itemId, getItemInfo, itemInfo } = useItemStore(
+      (state) => ({
+        setItemId: state.setItemId,
+        itemId: state.itemId,
+        getItemInfo: state.getItemInfo,
+        itemInfo: state.itemInfo,
+      })
+    );
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -39,8 +50,13 @@ function Scanner() {
     type: string;
     data: any;
   }) => {
-    setScanned(true);
+   let dataObj= JSON.parse(data)
+    setItemId(dataObj.itemId);
+    router.push("/viewItems");
+    console.log(data)
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    setScanned(true);
+
   };
   if (!permission) {
     // Camera permissions are still loading
@@ -112,10 +128,10 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
-    height: 300,
+ 
   },
   cameraWrap:{
-    height: SCREEN_WIDTH,
+    height: height,
   },
   buttonContainer: {
     padding: 30,

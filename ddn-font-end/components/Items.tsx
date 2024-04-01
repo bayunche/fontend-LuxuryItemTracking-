@@ -1,7 +1,7 @@
 import { View } from "./Themed";
 
 import { Text, StyleSheet, Dimensions, Image } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import {
   Avatar,
   Card,
@@ -29,6 +29,13 @@ const { width, height } = Dimensions.get("window");
 import * as imagePicker from "expo-image-picker";
 import Toast from "react-native-root-toast";
 import { base64ToBlob } from "../util/util";
+import moment from "moment";
+
+const wait = (timeout: number) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+}
 
 function Views() {
   const [visible, setVisible] = useState(false);
@@ -46,6 +53,8 @@ function Views() {
   const [initalLoad, setInitalLoad] = useState(true);
   const containerStyle = { backgroundColor: "white", padding: 20 };
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  let itemsList = [];
   const { itemList, getItemList, setItemId, itemId } = useItemStore(
     (state) => ({
       itemList: state.itemList,
@@ -54,6 +63,12 @@ function Views() {
       itemId: state.itemId,
     })
   );
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+     getItemList({});
+     console.log(itemList.length)
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     try {
@@ -67,14 +82,14 @@ function Views() {
   if (itemList.length > 0) {
     value = itemList.reduce((acc: any, shoe: any) => acc + shoe.value, 0);
   }
-  let itemsList = [];
+  
   if (itemList.length > 0) {
     // itemsList = itemList.reduce(
     //   (acc: any, shoe: any) => acc + parseInt(shoe.value),
     //   0
     // );
   }
-  const base64ToGallery = async (base64String: any) => {};
+  const base64ToGallery = async (base64String: any) => { };
   const handleView = (itemId: string) => {
     // router.push("/viewItems");
     setItemId(itemId);
@@ -83,7 +98,6 @@ function Views() {
 
   const handleResign = async () => {
     let data = { itemName, itemImage, itemDate };
-
     if (itemName == "" || itemImage == "" || itemDate == "") {
       return Toast.show("请完整填写表单", {
         duration: Toast.durations.SHORT,
@@ -163,7 +177,7 @@ function Views() {
       itemsList = getItemList(params);
     }, [])
   );
-
+  // RefreshControl
   return (
     <View style={styles.container}>
       <Portal>
@@ -241,7 +255,11 @@ function Views() {
         visible={visiblePay}
         hideModal={hidePayModal}
       ></RegisterUserModal>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <Title style={styles.title}>我的物品</Title>
         <View style={styles.card}>
           <LottieView
@@ -293,7 +311,7 @@ function Views() {
               />
               <Card.Content>
                 <Paragraph>品名 {shoe.itemName}</Paragraph>
-                <Paragraph>注册时间 {shoe.itemDate}</Paragraph>
+                <Paragraph>注册时间 {moment.unix(shoe.itemDate).format('YYYY-MM-DD HH:mm:ss')}</Paragraph>
               </Card.Content>
             </Card>
           ))}

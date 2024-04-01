@@ -8,7 +8,6 @@ export default function Personal() {
   
   return (
     <View style={styles.container}>
-  <APPbars></APPbars>    
       <Traceability></Traceability>
     </View>
   );

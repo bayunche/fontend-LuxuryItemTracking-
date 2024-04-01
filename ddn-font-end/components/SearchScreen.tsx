@@ -6,17 +6,17 @@ import { Card, Text, Button, BottomNavigation, Searchbar } from 'react-native-pa
 const BlockchainLuxuryApp = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const top = [
-    { title: '奢侈品项链 #1', subtitle: '地板价 0.5 ETH', imageUri: 'https://example.com/image1.jpg' },
-    { title: '奢侈品项链 #1', subtitle: '地板价 0.5 ETH', imageUri: 'https://example.com/image1.jpg' },
-    { title: '奢侈品项链 #1', subtitle: '地板价 0.5 ETH', imageUri: 'https://example.com/image1.jpg' },
+    { title: '奢侈品项链 #1', subtitle: '地板价 0.5 ETH', imageUri: 'https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/2feb88bf37b963dd29c91c8b49987d7ae3b7d0e6/ddn-font-end/assets/images/114644639_p0_master1200.jpg?raw=true' },
+    { title: '奢侈品项链 #1', subtitle: '地板价 0.5 ETH', imageUri: 'https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/2feb88bf37b963dd29c91c8b49987d7ae3b7d0e6/ddn-font-end/assets/images/114644639_p0_master1200.jpg?raw=true' },
+    { title: '奢侈品项链 #1', subtitle: '地板价 0.5 ETH', imageUri: 'https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/2feb88bf37b963dd29c91c8b49987d7ae3b7d0e6/ddn-font-end/assets/images/114644639_p0_master1200.jpg?raw=true' },
 
     // 添加更多对象...
   ];
   
   const attention = [
-    { title: '收藏品 #1', subtitle: '地板价 1.0 ETH', imageUri: 'https://example.com/image2.jpg' },
-    { title: '收藏品 #1', subtitle: '地板价 1.0 ETH', imageUri: 'https://example.com/image2.jpg' },
-    { title: '收藏品 #1', subtitle: '地板价 1.0 ETH', imageUri: 'https://example.com/image2.jpg' },
+    { title: '收藏品 #1', subtitle: '地板价 1.0 ETH', imageUri: 'https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/6f20269b885c4d5430c20bb58b32e2c56b950c80/ddn-font-end/assets/images/116503726_p0_master1200.jpg?raw=true' },
+    { title: '收藏品 #1', subtitle: '地板价 1.0 ETH', imageUri: 'https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/6f20269b885c4d5430c20bb58b32e2c56b950c80/ddn-font-end/assets/images/116503726_p0_master1200.jpg?raw=true' },
+    { title: '收藏品 #1', subtitle: '地板价 1.0 ETH', imageUri: 'https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/6f20269b885c4d5430c20bb58b32e2c56b950c80/ddn-font-end/assets/images/116503726_p0_master1200.jpg?raw=true' },
 
     // 添加更多对象...
   ];
@@ -122,11 +122,12 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     flexDirection: 'row',
     padding: 8,
+
   },
 
   card: {
     marginHorizontal: 8,
-    width: 180, // 可以根据实际需要调整宽度
+    width: 240, // 可以根据实际需要调整宽度
     height:"80%",
     elevation: 4,
   },
