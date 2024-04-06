@@ -8,9 +8,9 @@ import {
   TextInput,
   Title,
 } from "react-native-paper";
-import { editPassword } from "../api/login";
 import { router } from "expo-router";
 import Toast from "react-native-root-toast";
+import { editPassword } from "../api/user";
 
 function EditPasswordForm() {
   const [password, setPassword] = useState("");
@@ -209,7 +209,7 @@ function EditPasswordForm() {
 export default function EditPasswordView() {
   return (
     <View>
-      <Title style={{ padding: 16 }}>修改密码</Title>
+      <Title style={{ textAlign:"center" }}>修改密码</Title>
       <EditPasswordForm></EditPasswordForm>
     </View>
   );

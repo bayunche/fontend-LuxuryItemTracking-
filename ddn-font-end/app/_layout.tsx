@@ -32,7 +32,7 @@ export const unstable_settings = {
   initialRouteName: "/(tabs)/homeScreen",
 };
 import { RootSiblingParent } from "react-native-root-siblings";
-import { getUserInfos } from "../api/login";
+import { getUserInfos } from "../api/user";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -65,7 +65,7 @@ export default function RootLayout() {
     try {
       let res = await getUserInfos();
       await AsyncStorage.setItem("userInfo", JSON.stringify(res.data));
-      
+
       setRoot("Tab"); // 主页
       router.replace("/(tabs)/homeScreen");
     } catch (error) {
@@ -126,6 +126,7 @@ function RootLayoutNav() {
                 <Stack.Screen name="signUp" options={{ headerShown: false }} />
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 <Stack.Screen name="viewItems" options={{ headerShown: false }} />
+                <Stack.Screen name="editInfo" options={{ headerShown: false }} />
                 <Stack.Screen
                   name="modal"
                   options={{ presentation: "modal" }}

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getItemDetail, getListItem } from "../api/item";
-import { getUserInfos } from "../api/login";
+import { getUserInfos } from "../api/user";
 // import { login } from "../api/login";
 
 interface useUserState {

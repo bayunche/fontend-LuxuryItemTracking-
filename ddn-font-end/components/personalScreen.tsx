@@ -97,7 +97,7 @@ function PersonalInfo() {
           leftIcon: "",
           onPress: () => {
             // 支付逻辑
-            
+
           },
         },
       ],
@@ -133,7 +133,7 @@ function PersonalInfo() {
       {setting.map((group) => {
         return (
           <View
-          key={group.title}
+            key={group.title}
             style={{
               marginTop: 16,
               marginBottom: 16,
@@ -263,8 +263,8 @@ const styles = StyleSheet.create({
   header: {
     width: "100%",
     paddingTop: 30,
-    paddingLeft:30,
-    paddingBottom:30,
+    paddingLeft: 30,
+    paddingBottom: 30,
     height: 300,
     justifyContent: "flex-start",
     backgroundColor: "#fcf8f7",

@@ -202,7 +202,7 @@ function ItemSalesInfo({ info }: { info: itemInfoType | undefined }) {
 }
 
 
-const wait = (timeout:number) => {
+const wait = (timeout: number) => {
   return new Promise(resolve => {
     setTimeout(resolve, timeout);
   });
@@ -235,7 +235,8 @@ function ItemInfoDescription({ info }: { info: itemInfoType | undefined }) {
     if (!info?.itemDate) {
       return "--"
     }
-    return moment.unix(info.itemDate).format('YYYY-MM-DD HH:mm:ss')
+    let dateTime = Number(info.itemDate)
+    return moment.unix(dateTime).format('YYYY-MM-DD HH:mm:ss')
   }
   return (
     <View style={styles.description}>
@@ -348,7 +349,7 @@ export default function ViewItem() {
   );
   const [displayQRcode, setDisplayQRcode] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
-  
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
 
@@ -373,11 +374,11 @@ export default function ViewItem() {
   }, [itemInfos]);
   return (
     <View style={styles.container}>
-      <ScrollView 
-      
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
+      <ScrollView
+
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <TouchableRipple onPress={() => {
           setDisplayQRcode(!displayQRcode)
         }}>

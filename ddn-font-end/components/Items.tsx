@@ -46,7 +46,7 @@ function Views() {
   const hidePayModal = () => setVisiblePay(false);
   const [itemName, setItemName] = useState("");
   const [itemDate, setItemDate] = useState<DateType | undefined>(dayjs());
-  const [itemImage, setItemImage] = useState(String || null || undefined);
+  const [itemImage, setItemImage] = useState<String | undefined | null>(null);
   const [dialogVisible, setDialogVisible] = useState(false);
   const hideDialog = () => setDialogVisible(false);
   const [select, setSelect] = useState(Boolean);
@@ -89,7 +89,7 @@ function Views() {
     //   0
     // );
   }
-  const base64ToGallery = async (base64String: any) => {};
+  const base64ToGallery = async (base64String: any) => { };
   const handleView = (itemId: string) => {
     // router.push("/viewItems");
     setItemId(itemId);

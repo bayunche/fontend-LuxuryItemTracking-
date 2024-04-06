@@ -6,12 +6,7 @@ export async function login(data: object) {
    return await request.post('/auth/login', data)
 }
 
-export async function getUserInfos() {
-    return await request.get('/user/getUserInfo')
-}
+
 export  function signup(data: object) {
     return request.post('/auth/signup', data)
-}
-export async function editPassword(data:object) {
-    return request.post('/user/editPassword', data)
 }
