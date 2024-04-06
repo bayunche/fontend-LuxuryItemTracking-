@@ -32,10 +32,10 @@ import { base64ToBlob } from "../util/util";
 import moment from "moment";
 
 const wait = (timeout: number) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, timeout);
   });
-}
+};
 
 function Views() {
   const [visible, setVisible] = useState(false);
@@ -65,8 +65,8 @@ function Views() {
   );
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-     getItemList({});
-     console.log(itemList.length)
+    getItemList({});
+    console.log(itemList.length);
     wait(2000).then(() => setRefreshing(false));
   }, []);
   const pickImage = async () => {
@@ -82,14 +82,14 @@ function Views() {
   if (itemList.length > 0) {
     value = itemList.reduce((acc: any, shoe: any) => acc + shoe.value, 0);
   }
-  
+
   if (itemList.length > 0) {
     // itemsList = itemList.reduce(
     //   (acc: any, shoe: any) => acc + parseInt(shoe.value),
     //   0
     // );
   }
-  const base64ToGallery = async (base64String: any) => { };
+  const base64ToGallery = async (base64String: any) => {};
   const handleView = (itemId: string) => {
     // router.push("/viewItems");
     setItemId(itemId);
@@ -212,6 +212,7 @@ function Views() {
                   marginTop: 16,
                   backgroundColor: "#b19cd9",
                   marginBottom: 16,
+                  width: "35%",
                 }}
                 onPress={pickImage}
               >
@@ -219,8 +220,9 @@ function Views() {
               </Button>
               <Button
                 mode="contained"
-                style={{ backgroundColor: "#b19cd9" }}
+                style={{ backgroundColor: "#b19cd9", width: "35%" }}
                 onPress={handleResign}
+                loading={loading}
               >
                 提交认证
               </Button>
@@ -255,7 +257,8 @@ function Views() {
         visible={visiblePay}
         hideModal={hidePayModal}
       ></RegisterUserModal>
-      <ScrollView style={styles.container}
+      <ScrollView
+        style={styles.container}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -311,7 +314,10 @@ function Views() {
               />
               <Card.Content>
                 <Paragraph>品名 {shoe.itemName}</Paragraph>
-                <Paragraph>注册时间 {moment.unix(shoe.itemDate).format('YYYY-MM-DD HH:mm:ss')}</Paragraph>
+                <Paragraph>
+                  注册时间{" "}
+                  {moment.unix(shoe.itemDate).format("YYYY-MM-DD HH:mm:ss")}
+                </Paragraph>
               </Card.Content>
             </Card>
           ))}

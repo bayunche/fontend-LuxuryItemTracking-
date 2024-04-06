@@ -32,7 +32,7 @@
       ]
     },
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "assets/images/60103079_p0_master1200.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

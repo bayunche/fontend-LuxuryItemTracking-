@@ -83,7 +83,7 @@ function PersonalInfo() {
           label: "修改密码",
           description: "",
           leftIcon: "",
-          onPress: () => router.push("/editPassword"),
+          onPress: () => router.push("/editPasswordScreen"),
         },
         {
           label: "编辑个人信息",

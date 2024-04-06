@@ -12,3 +12,6 @@ export async function getUserInfos() {
 export  function signup(data: object) {
     return request.post('/auth/signup', data)
 }
+export async function editPassword(data:object) {
+    return request.post('/user/editPassword', data)
+}
