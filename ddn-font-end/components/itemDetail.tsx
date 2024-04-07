@@ -213,7 +213,6 @@ function ItemInfoDescription({ info }: { info: itemInfoType | undefined }) {
     if (!status) {
       return "--";
     }
-    console.log(status);
     let newStatus = Number(status);
     switch (newStatus) {
       case 1:
@@ -362,7 +361,6 @@ export default function ViewItem() {
       getItemInfo(params);
       return () => {
         setItemInfos(undefined);
-        console.log("Screen was unfocused");
       };
     }, [])
   );
@@ -375,7 +373,6 @@ export default function ViewItem() {
   return (
     <View style={styles.container}>
       <ScrollView
-
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
@@ -401,12 +398,13 @@ export default function ViewItem() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
   },
   imageWrap: {
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: 16,
+    paddingBottom:0
   },
   descriptionItem: {
     flexDirection: "column",

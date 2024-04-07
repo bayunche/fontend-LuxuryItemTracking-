@@ -14,6 +14,8 @@ interface useUserState {
     setUserInfo: (by: any) => void;
     removeUserInfo: (by: any) => void;
     getUserInfo: (by: any) => object;
+    TopUpMoney: number;
+    getTopUpMoney: (by: any) => any;
 }
 
 interface useItemInfoState {
@@ -33,7 +35,7 @@ type res = {
 type info = {
     data: object;
 };
-type itemInfoType= {
+type itemInfoType = {
     title: string;
     value: string | number;
     itemName: string;
@@ -50,7 +52,7 @@ type itemInfoType= {
     TransportWay: string;
     TransportNumber: number | string;
     TransportCompany: string;
-    TransportDate:string;
+    TransportDate: string;
     updater: string;
     blockNumber: bigint;
     transactionHash: string;
@@ -85,12 +87,17 @@ const useUserStore = create<useUserState>((set) => ({
     // }
     getUserInfo: async (by: object) => {
         let res = await getUserInfos();
-        console.log(res.data);
         let info: any = res.data;
-        console.log(info.data);
         set(() => ({ userInfo: info.data }));
         return info.data;
     },
+    getTopUpMoney: async (by: any) => {
+        
+        let res = await getTopUp();
+        let info: any = res.data;
+        set(() => ({ TopUpMoney: info.data }));
+     return info.data;
+    }
 }));
 const useItemStore = create<useItemInfoState>((set) => ({
     itemId: "",

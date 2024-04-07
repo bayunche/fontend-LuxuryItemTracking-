@@ -53,7 +53,6 @@ function Scanner() {
    let dataObj= JSON.parse(data)
     setItemId(dataObj.itemId);
     router.push("/viewItems");
-    console.log(data)
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     setScanned(true);
 

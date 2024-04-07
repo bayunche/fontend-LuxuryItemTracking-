@@ -1,6 +1,6 @@
 import { ScrollView } from "react-native-gesture-handler";
 import { View } from "./Themed";
-import { Avatar, Button, TextInput, Title, TouchableRipple } from "react-native-paper";
+import { Avatar, Button, HelperText, TextInput, Title, TouchableRipple } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import { useCallback, useState } from "react";
 import { useUserStore } from "../zustand/store";
@@ -9,15 +9,22 @@ import * as ImagePicker from 'expo-image-picker';
 import Toast from "react-native-root-toast";
 import { editUserInfo } from "../api/user";
 
-const CostomInput = ({ label, text, onChangeText, disabled }: { label: string, text: string, onChangeText: (text: string) => void, disabled: boolean }) => {
+const CostomInput = ({ label, text, onChangeText, disabled, validText, Err }: { label: string, text: string, onChangeText: (text: string) => void, disabled: boolean, validText: string, Err: boolean }) => {
+
   return (
-    <TextInput
-      label={label}
-      value={text}
-      mode="outlined"
-      disabled={disabled}
-      onChangeText={text => onChangeText(text)}
-    />
+    <View style={styles.input}>
+      <TextInput
+        label={label}
+        value={text}
+        mode="outlined"
+        error={Err}
+        disabled={disabled}
+        onChangeText={text => onChangeText(text)}
+      />
+      <HelperText type="error" visible={Err}>
+        {validText}
+      </HelperText>
+    </View>
   )
 }
 
@@ -29,9 +36,11 @@ const EditInfoForm = () => {
   const [email, setEmail] = useState(userInfo.email);
   const [name, setName] = useState(userInfo.name)
   const [userName, setUserName] = useState(userInfo.userName)
-  const [avatar, setAvatar] = useState<string|null|undefined>(userInfo.avatar)
+  const [avatar, setAvatar] = useState<string | null | undefined>(userInfo.avatar)
   const [phone, setPhone] = useState(userInfo.phone)
   const [submitting, setSubmitting] = useState(false);
+  const [emailErr, setEmailErr] = useState(false);
+  const [phoneNumberErr, setPhoneNumberErr] = useState(false);
   const handleSubmit = async () => {
     setSubmitting(true);
     let data = {
@@ -47,27 +56,51 @@ const EditInfoForm = () => {
       return;
 
     }
+    // 验证
+    if (emailErr || phoneNumberErr) {
+      setSubmitting(false);
+      Toast.show("请检查输入");
+      return;
+
+    }
     // 提交
     try {
       let res = await editUserInfo(data)
       Toast.show("修改成功");
     } catch (error) {
-
       Toast.show("修改失败");
       console.log(error)
+    } finally {
+      setSubmitting(false);
+      getUserInfo({});
     }
 
   }
   return (
     <View style={styles.Form}>
       <UseAvatar avatar={avatar} setAvatar={setAvatar} />
-      <View >
-        <CostomInput label="用户名" text={userName} disabled={true} onChangeText={setUserName} />
-        <CostomInput label="邮箱" text={email} disabled={false} onChangeText={setEmail} />
-        <CostomInput label="姓名" text={name} disabled={false} onChangeText={setName} />
-        <CostomInput label="手机" text={phone} disabled={false} onChangeText={setPhone} />
+      <CostomInput Err={false} validText="" label="用户名" text={userName} disabled={true} onChangeText={setUserName} />
+      <CostomInput Err={emailErr} validText="请输入正确的邮箱" label="邮箱" text={email} disabled={false} onChangeText={(text) => {
+        const mailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        if (!mailReg.test(text)) {
+          setEmailErr(true);
+        } else {
+          setEmailErr(false);
+        }
+        setEmail(text);
+      }} />
+      <CostomInput validText="" Err={false} label="姓名" text={name} disabled={false} onChangeText={setName} />
+      <CostomInput validText="请输入正确的手机号码" Err={phoneNumberErr} label="手机" text={phone} disabled={false} onChangeText={(text) => {
+        const phoneReg = /^1[3-9]\d{9}$/
+        if (!phoneReg.test(text)) {
+          setPhoneNumberErr(true);
+        } else {
+          setPhoneNumberErr(false)
+        }
+        setPhone(text)
+      }} />
 
-      </View>
+
       <View style={styles.buttonGroup}>
         <Button
           style={{ marginRight: 8 }}
@@ -96,8 +129,8 @@ const EditInfoForm = () => {
   )
 }
 
-const UseAvatar = ({ avatar, setAvatar }: { avatar: string|undefined|null, setAvatar:any }) => {
-  const [image, setImage] = useState<string|null|undefined>(null);
+const UseAvatar = ({ avatar, setAvatar }: { avatar: string | undefined | null, setAvatar: any }) => {
+  const [image, setImage] = useState<string | null | undefined>(null);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -154,8 +187,8 @@ const styles = StyleSheet.create({
     width: "25%",
   },
   input: {
-    padding: 16,
-    paddingBottom: 0,
+
+    paddingBottom: 16,
   },
   buttonGroup: {
     flexDirection: "row",
