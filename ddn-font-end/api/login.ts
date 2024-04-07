@@ -10,3 +10,8 @@ export async function login(data: object) {
 export  function signup(data: object) {
     return request.post('/auth/signup', data)
 }
+
+
+export function getTopUp(params:object){
+    return request.get('/topup/get', params)
+}

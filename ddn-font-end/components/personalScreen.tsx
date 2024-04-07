@@ -1,22 +1,18 @@
 import { View, Text } from "./Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Platform, StyleSheet } from "react-native";
-import { Avatar, FAB, List, TouchableRipple } from "react-native-paper";
+import { Avatar, FAB, List, Modal, Portal, Title, TouchableRipple } from "react-native-paper";
 import { useUserStore } from "../zustand/store";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import DeviceInfo from "react-native-device-info";
-// useState
-// FAB
-// Platform
-// ScrollView
+
 function UserAvatar() {
   const { userInfo, setUserInfo } = useUserStore((state) => ({
     userInfo: state.userInfo,
     setUserInfo: state.setUserInfo,
   }));
-  console.log(userInfo);
   if (userInfo.avatar == null) {
     // let label = userInfo.userName
     //   .split(" ")
@@ -33,7 +29,7 @@ function UserAvatar() {
     let url = userInfo.avatar;
     return (
       <View style={styles.avatar}>
-        <Avatar.Image size={128} source={url}></Avatar.Image>
+        <Avatar.Image size={128} source={{ uri: "data:image/jpeg;base64," + url }}></Avatar.Image>
       </View>
     );
   }
@@ -51,7 +47,6 @@ function Header() {
       getUserInfo(params);
     }, [])
   );
-  console.log(userInfo);
 
   return (
     <View style={styles.header}>
@@ -69,7 +64,7 @@ function Header() {
       </View>
       <View style={styles.headerText}>
         <UserAvatar />
-        <Text style={styles.name}>{userInfo?.userName}</Text>
+        <Text style={styles.name}>{userInfo?.name || userInfo.userName}</Text>
       </View>
     </View>
   );
@@ -130,6 +125,7 @@ function PersonalInfo() {
   ];
   return (
     <View style={styles.personalInfo}>
+  
       {setting.map((group) => {
         return (
           <View
@@ -215,9 +211,11 @@ function PersonalInfo() {
   );
 }
 function PersonalView() {
+
   return (
     <View style={styles.personalContainer}>
       <Header></Header>
+      <TopUpView money={money}></TopUpView>
       <ScrollView>
         <PersonalInfo></PersonalInfo>
       </ScrollView>
