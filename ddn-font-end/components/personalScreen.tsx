@@ -7,6 +7,7 @@ import { router, useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import DeviceInfo from "react-native-device-info";
+import TopUpView from "./TopUpView";
 
 function UserAvatar() {
   const { userInfo, setUserInfo } = useUserStore((state) => ({
@@ -70,6 +71,7 @@ function Header() {
   );
 }
 function PersonalInfo() {
+
   const setting = [
     {
       title: "基本",
@@ -118,6 +120,7 @@ function PersonalInfo() {
           leftIcon: "",
           onPress: () => {
             // 支付逻辑
+
           },
         },
       ],
@@ -125,7 +128,7 @@ function PersonalInfo() {
   ];
   return (
     <View style={styles.personalInfo}>
-  
+
       {setting.map((group) => {
         return (
           <View
@@ -211,11 +214,11 @@ function PersonalInfo() {
   );
 }
 function PersonalView() {
-
+  const [visible, setVisible] = useState(false)
   return (
     <View style={styles.personalContainer}>
       <Header></Header>
-      <TopUpView money={money}></TopUpView>
+      <TopUpView visible={visible} setVisible={setVisible} ></TopUpView>
       <ScrollView>
         <PersonalInfo></PersonalInfo>
       </ScrollView>

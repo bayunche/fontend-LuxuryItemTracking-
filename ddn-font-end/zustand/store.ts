@@ -1,7 +1,9 @@
 import { create } from "zustand";
 import { getItemDetail, getListItem } from "../api/item";
 import { getUserInfos } from "../api/user";
+import { getTopUp } from "../api/login";
 // import { login } from "../api/login";
+
 
 interface useUserState {
     userId: string;
@@ -85,18 +87,19 @@ const useUserStore = create<useUserState>((set) => ({
     //     })
     //     return result;
     // }
+    TopUpMoney: 0,
     getUserInfo: async (by: object) => {
         let res = await getUserInfos();
         let info: any = res.data;
         set(() => ({ userInfo: info.data }));
         return info.data;
     },
+    
     getTopUpMoney: async (by: any) => {
-        
-        let res = await getTopUp();
+        let res = await getTopUp({});
         let info: any = res.data;
         set(() => ({ TopUpMoney: info.data }));
-     return info.data;
+        return info.data;
     }
 }));
 const useItemStore = create<useItemInfoState>((set) => ({

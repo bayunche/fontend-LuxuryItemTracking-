@@ -196,7 +196,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   Form: {
-    padding: 16
+    padding: 16,
+    borderRadius:16,
+    backgroundColor: "#ECE9EC",
   },
   container: {
     flex: 1,
