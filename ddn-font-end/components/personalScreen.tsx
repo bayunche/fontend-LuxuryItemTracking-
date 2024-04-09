@@ -70,7 +70,7 @@ function Header() {
     </View>
   );
 }
-function PersonalInfo() {
+function PersonalInfo({setVisible}:{setVisible:(visible:boolean)=>void}) {
 
   const setting = [
     {
@@ -94,7 +94,7 @@ function PersonalInfo() {
           leftIcon: "",
           onPress: () => {
             // 支付逻辑
-
+     setVisible(true)   
           },
         },
       ],
@@ -128,7 +128,6 @@ function PersonalInfo() {
   ];
   return (
     <View style={styles.personalInfo}>
-
       {setting.map((group) => {
         return (
           <View
@@ -220,7 +219,7 @@ function PersonalView() {
       <Header></Header>
       <TopUpView visible={visible} setVisible={setVisible} ></TopUpView>
       <ScrollView>
-        <PersonalInfo></PersonalInfo>
+        <PersonalInfo setVisible={setVisible}></PersonalInfo>
       </ScrollView>
     </View>
   );

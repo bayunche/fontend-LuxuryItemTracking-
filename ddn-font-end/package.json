@@ -24,6 +24,7 @@
     "@types/react-native-snap-carousel": "^3.8.10",
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",
+    "@uiw/react-native-alipay": "^5.0.2",
     "axios": "^1.6.5",
     "eas-cli": "^5.9.3",
     "eva": "^1.0.0",

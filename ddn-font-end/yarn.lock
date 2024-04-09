@@ -3173,6 +3173,11 @@
   dependencies:
     react-native-eva-icons "^1.3.1"
 
+"@uiw/react-native-alipay@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmmirror.com/@uiw/react-native-alipay/-/react-native-alipay-5.0.2.tgz#13072abe088f7175f936432bb5c49172399d827e"
+  integrity sha512-W2Q9JCE+x0zVIz/jRwz8Q7XNOl/UmCfr5+IbDhEJuwpYJRcih7jdQGUYieQCHICvPST/JMkNsCXsYDeLRg5c3w==
+
 "@urql/core@2.3.6":
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/@urql/core/-/core-2.3.6.tgz#ee0a6f8fde02251e9560c5f17dce5cd90f948552"
