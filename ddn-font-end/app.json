@@ -32,13 +32,16 @@
       ]
     },
     "splash": {
-      "image": "assets/images/60103079_p0_master1200.jpg",
+      "image": "assets/images/av536-ug3zg.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bayunche.ddnfontend"
     },
     "android": {
       "adaptiveIcon": {
@@ -49,7 +52,9 @@
     },
     "build": {
       "babel": {
-        "include": ["@ui-kitten/components"]
+        "include": [
+          "@ui-kitten/components"
+        ]
       }
     },
     "web": {
@@ -85,13 +90,6 @@
       }
     },
     "owner": "bayunche"
-  },
-  // 生产
-  "baseUrl": "http://8.134.196.44:3101"
+  }
 
-  // 测试
-  // "baseUrl": "http://127.0.0.1:3101/"
-  // "baseUrl": "http://8.134.196.44:3100"
-  // "baseUrl": "http://192.168.1.100:3100"
-  // "baseUrl": "http://192.168.1.100:3101"
 }

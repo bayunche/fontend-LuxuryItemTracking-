@@ -1,12 +1,12 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { baseUrl } from '../app.json';
 import axios from "axios";
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import Toast from 'react-native-root-toast';
 import { tansParams } from '../util/paramsEdit';
 import { router } from "expo-router";
 // import { err } from 'react-native-svg/lib/typescript/xml';
+let   baseUrl= "http://8.134.196.44:3101"
 
 type Result<T> = {
     // code: number;
