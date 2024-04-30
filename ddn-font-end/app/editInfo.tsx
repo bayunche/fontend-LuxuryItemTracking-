@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { View } from "../components/Themed";
-import EditInfoView from "../components/EditInfo";
+import EditInfoView from "../components/user/EditInfo";
 import APPbars from "../components/AppBar";
 export default function EditInfo() {
     return (

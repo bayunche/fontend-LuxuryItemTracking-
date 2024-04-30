@@ -16,8 +16,8 @@ export default function Search() {
   return (
     <View style={styles.container}>
       <APPbars />
-      <ScrollView horizontal={false} keyboardDismissMode={"on-drag"} keyboardShouldPersistTaps={'handled'} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={true} iosalwaysBounceHorizontal={false} iosalwaysBounceVertical={false}  iosbounces= {true}     >
-    <BlockchainLuxuryApp/>
+      <ScrollView horizontal={false} keyboardDismissMode={"on-drag"} keyboardShouldPersistTaps={'handled'} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={true}       >
+        <BlockchainLuxuryApp />
       </ScrollView>
 
     </View>

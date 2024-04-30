@@ -1,10 +1,12 @@
 import React from "react";
 // import { ScrollView } from 'react-native';
 // import Banner from "./Banner";
-import { View } from "./Themed";
+import { Text, View } from "./Themed";
 import Banner from "./Banner";
 // import { Appbar } from "react-native-paper";
 import APPbars from "./AppBar";
+import { Card } from "react-native-paper";
+import { router } from "expo-router";
 const bannerData = [
   {
     title: "Banner 1",
@@ -32,23 +34,90 @@ const bannerData = [
   },
   // ...更多 banner 数据
 ];
+const routerList = [
+  {
+    path: "/TraceabilityScreen",
+    key: "Traceability"
+    , name: "物品溯源",
+    onPress: () => router.push("/TraceabilityScreen"),
+  },
+  {
+    path: "/registerItemScreen",
+    key: "registerItemScreen"
+    , name: "物品注册"
 
+    , onPress: () => router.push("/registerItemScreen"),
+
+  },
+  {
+    path: "/(tabs)/personalItem",
+    key: "personalItem"
+    , name: "物品管理"
+    , onPress: () => router.push("/(tabs)/personalItem"),
+  },
+  {
+    path: "/personalTrade",
+    key: "personalTrade"
+    , name: "消费记录"
+    , onPress: () => router.push("/personalTrade"),
+  },
+
+]
+const RouterBar = () => {
+  return (
+
+    <View style={styles.routerBar}>
+      {routerList.map((item, index) => {
+        return (
+          <Card key={index} style={styles.routerCard} onPress={item.onPress}>
+          <Card.Content style={{ display: "flex", flexDirection: "column" }}>
+            <Text >{item.name}</Text>
+          </Card.Content>
+        </Card>
+        )
+      })}
+    </View>
+
+
+  )
+
+}
 const HomeScreen = () => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <APPbars />
       <Banner banners={bannerData} />
+      <RouterBar />
     </View>
   );
 };
+import { StyleSheet } from 'react-native'
 
-const styles = {
+const styles = StyleSheet.create({
   Banner: {
     width: "100%",
     height: 200,
     //  resizeMode: 'cover',
     //  justifyContent: 'center',
   },
-};
+  routerBar: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    boxShadow: "2px 4px 8px rgba(0, 0, 0, 0.123)",
+    marginTop: 100,
+    backgroundColor: "#ECE9EC",
+
+    padding: 8,
+    margin: 8,
+    borderRadius: 16
+  },
+  routerCard: {
+    margin: 10,
+    boxShadow: "2px 4px 8px rgba(0, 0, 0, 0.123)",
+    width: "42.8%",
+    // Additional styling
+  },
+})
 
 export default HomeScreen;

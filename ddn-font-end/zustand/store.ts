@@ -1,9 +1,20 @@
 import { create } from "zustand";
 import { getItemDetail, getListItem } from "../api/item";
-import { getUserInfos } from "../api/user";
+import { getTransactionInfo, getTransactionListByUserId, getUserInfos } from "../api/user";
 import { getTopUp } from "../api/login";
+import { DateType } from "react-native-ui-datepicker";
 // import { login } from "../api/login";
 
+interface useTransactionState {
+    transactionLogId: number
+    setTransactionLogId: (by: number) => void
+    transactionLogs: transactionLog
+    getTransactionLogs: (id: number) => void
+    setTransactionLogs: (by: transactionLog) => void
+    getTransactionList: () => void
+    transactionList: transactionLogList
+    setTransactionList: (by: transactionLogList) => void
+}
 
 interface useUserState {
     userId: string;
@@ -52,9 +63,9 @@ type itemInfoType = {
     startPoint: string;
     endPoint: string;
     TransportWay: string;
-    TransportNumber: number | string;
+    TransportNumber: string;
     TransportCompany: string;
-    TransportDate: string;
+    TransportDate: string | DateType | undefined;
     updater: string;
     blockNumber: bigint;
     transactionHash: string;
@@ -65,8 +76,29 @@ type itemInfoType = {
     salesOutlet: string;
     createdAt: Date | number | string | bigint;
     updatedAt: Date | number | string | bigint;
+    brand: string
+    model: string
+    errorMessage: string
+    remark: string
+    salesInfoBlockNumber: bigint
+    logisticsInfoBlockNumber: bigint
+    logistics_status: string | number
+    salesInfo_status: string | number
+    hasChange: string
+    reason: string|null|undefined
 }
-
+type transactionLog = {
+    id: number,
+    creater: string,
+    itemName: string,
+    itemId: string,
+    createTime: Date | string | number | bigint,
+    serialNumber: bigint,
+    blockNumber: bigint,
+    transactionHash: string,
+    description: string,
+}
+type transactionLogList = transactionLog[]
 const useUserStore = create<useUserState>((set) => ({
     userId: "",
     setUserId: (id: string) => set(() => ({ userId: id })),
@@ -94,7 +126,7 @@ const useUserStore = create<useUserState>((set) => ({
         set(() => ({ userInfo: info.data }));
         return info.data;
     },
-    
+
     getTopUpMoney: async (by: any) => {
         let res = await getTopUp({});
         let info: any = res.data;
@@ -138,5 +170,39 @@ const useItemStore = create<useItemInfoState>((set) => ({
         return result;
     },
 }));
+const useTransactionStore = create<useTransactionState>((set) => ({
+    transactionLogId: 0,
+    setTransactionId: (id: number) => set(() => ({ transactionLogId: id })),
+    getTransactionList: async () => {
+        let result: transactionLogList = [];
+        try {
+            let info: any = await getTransactionListByUserId();
+            result = await info.data as transactionLogList
+            set({ transactionList:result })
+        } catch (error) {
+            console.log(error);
+        }
 
-export { useUserStore, useItemStore, itemInfoType };
+        return result;
+    },
+
+    transactionLogs: <transactionLog>{},
+    transactionList: <transactionLogList>[],
+    getTransactionLogs: async (id: number) => {
+        let result: any = {};
+        try {
+            let info: any = await getTransactionInfo({ transactionLogId:id });
+            result = await info.data
+            set(() => ({ transactionLogs: result }));
+        } catch (error) {
+            console.log(error);
+        }
+
+        return result;
+    },
+    setTransactionLogId: (id: number) => set(() => ({ transactionLogId: id })),
+    setTransactionLogs: (transactionLog: transactionLog) => set(() => ({ transactionLogs: transactionLog })),
+    setTransactionList: (by) => set({ transactionList: by }),
+
+}))
+export { useUserStore, useItemStore, itemInfoType,useTransactionStore,transactionLogList,transactionLog  };

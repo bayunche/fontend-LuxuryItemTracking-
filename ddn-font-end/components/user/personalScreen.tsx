@@ -1,8 +1,8 @@
-import { View, Text } from "./Themed";
+import { View, Text } from "../Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Platform, StyleSheet } from "react-native";
-import { Avatar, FAB, List, Modal, Portal, Title, TouchableRipple } from "react-native-paper";
-import { useUserStore } from "../zustand/store";
+import { Avatar, Card, FAB, List, Modal, Portal, Title, TouchableRipple } from "react-native-paper";
+import { useUserStore } from "../../zustand/store";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
@@ -70,8 +70,12 @@ function Header() {
     </View>
   );
 }
-function PersonalInfo({setVisible}:{setVisible:(visible:boolean)=>void}) {
-
+function PersonalInfo({ setVisible }: { setVisible: (visible: boolean) => void }) {
+  const { userInfo, setUserInfo, getUserInfo } = useUserStore((state) => ({
+    userInfo: state.userInfo,
+    setUserInfo: state.setUserInfo,
+    getUserInfo: state.getUserInfo,
+  }));
   const setting = [
     {
       title: "基本",
@@ -88,15 +92,17 @@ function PersonalInfo({setVisible}:{setVisible:(visible:boolean)=>void}) {
           leftIcon: "",
           onPress: () => router.push("/editInfo"),
         },
+        
         {
           label: "重置额度",
           description: "",
           leftIcon: "",
           onPress: () => {
             // 支付逻辑
-     setVisible(true)   
+            setVisible(true)
           },
         },
+
       ],
     },
     {
@@ -109,10 +115,10 @@ function PersonalInfo({setVisible}:{setVisible:(visible:boolean)=>void}) {
           onPress: () => router.push("/TraceabilityScreen"),
         },
         {
-          label: "",
+          label: "物品交易记录",
           description: "",
           leftIcon: "",
-          onPress: () => router.push("/editInfo"),
+          onPress: () => router.push("/transactionList"),
         },
         {
           label: "重置额度",
@@ -126,8 +132,17 @@ function PersonalInfo({setVisible}:{setVisible:(visible:boolean)=>void}) {
       ],
     },
   ];
+  console.log(userInfo.balance)
   return (
     <View style={styles.personalInfo}>
+      <View style={{ padding: 8, }}>
+        <Card>
+          <Card.Content style={{ display: "flex", flexDirection: "column" }}>
+            <Text >您的当前余额</Text>
+            <Text >{userInfo.balance}</Text>
+          </Card.Content>
+        </Card>
+      </View>
       {setting.map((group) => {
         return (
           <View
@@ -214,6 +229,7 @@ function PersonalInfo({setVisible}:{setVisible:(visible:boolean)=>void}) {
 }
 function PersonalView() {
   const [visible, setVisible] = useState(false)
+
   return (
     <View style={styles.personalContainer}>
       <Header></Header>

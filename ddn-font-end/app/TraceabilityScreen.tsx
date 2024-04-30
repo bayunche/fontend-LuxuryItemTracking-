@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 
 import { View } from "../components/Themed";
-import Traceability from "../components/Traceability";
+import Traceability from "../components/user/Traceability";
 import APPbars from "../components/AppBar";
 export default function Personal() {
   

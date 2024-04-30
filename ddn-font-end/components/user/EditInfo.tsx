@@ -1,13 +1,13 @@
 import { ScrollView } from "react-native-gesture-handler";
-import { View } from "./Themed";
+import { View } from "../Themed";
 import { Avatar, Button, HelperText, TextInput, Title, TouchableRipple } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import { useCallback, useState } from "react";
-import { useUserStore } from "../zustand/store";
+import { useUserStore } from "../../zustand/store";
 import { router, useFocusEffect } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
 import Toast from "react-native-root-toast";
-import { editUserInfo } from "../api/user";
+import { editUserInfo } from "../../api/user";
 
 const CostomInput = ({ label, text, onChangeText, disabled, validText, Err }: { label: string, text: string, onChangeText: (text: string) => void, disabled: boolean, validText: string, Err: boolean }) => {
 
@@ -67,6 +67,7 @@ const EditInfoForm = () => {
     try {
       let res = await editUserInfo(data)
       Toast.show("修改成功");
+      router.back()
     } catch (error) {
       Toast.show("修改失败");
       console.log(error)
@@ -89,7 +90,7 @@ const EditInfoForm = () => {
         }
         setEmail(text);
       }} />
-      <CostomInput validText="" Err={false} label="姓名" text={name} disabled={false} onChangeText={setName} />
+      <CostomInput validText="请输入姓名" Err={false} label="姓名" text={name} disabled={false} onChangeText={setName} />
       <CostomInput validText="请输入正确的手机号码" Err={phoneNumberErr} label="手机" text={phone} disabled={false} onChangeText={(text) => {
         const phoneReg = /^1[3-9]\d{9}$/
         if (!phoneReg.test(text)) {
@@ -187,17 +188,21 @@ const styles = StyleSheet.create({
     width: "25%",
   },
   input: {
+    backgroundColor: "#ECE9EC",
 
     paddingBottom: 16,
   },
   buttonGroup: {
     flexDirection: "row",
     justifyContent: "center",
+    backgroundColor: "#ECE9EC",
+
     padding: 16,
   },
   Form: {
     padding: 16,
-    borderRadius:16,
+    margin: 16,
+    borderRadius: 16,
     backgroundColor: "#ECE9EC",
   },
   container: {

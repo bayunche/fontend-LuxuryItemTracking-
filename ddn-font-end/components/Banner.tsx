@@ -33,7 +33,6 @@ const Banner = ({ banners }: BannerProps) => {
       {banners.map((banner, index) => (
         <View key={index} style={styles.page}>
           <Card onPress={banner.onPress}>
-        
             <Card.Title title={banner.title} subtitle={banner.description} />
             <Card.Cover source={{ uri: banner.url }} />
           </Card>
@@ -45,7 +44,7 @@ const Banner = ({ banners }: BannerProps) => {
 
 const styles = StyleSheet.create({
   viewPager: {
-    flex: 1,
+  
     height: 200, // 根据需要调整
   },
   page: {

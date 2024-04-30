@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import PersonalView from "../../components/personalScreen";
+import PersonalView from "../../components/user/personalScreen";
 import { View } from "../../components/Themed";
 export default function Personal() {
   return (

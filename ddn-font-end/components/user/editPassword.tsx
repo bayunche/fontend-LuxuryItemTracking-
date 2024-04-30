@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text, View } from "./Themed";
+import { Text, View } from "../Themed";
 import { StyleSheet } from "react-native";
 import {
   Button,
@@ -10,7 +10,7 @@ import {
 } from "react-native-paper";
 import { router } from "expo-router";
 import Toast from "react-native-root-toast";
-import { editPassword } from "../api/user";
+import { editPassword } from "../../api/user";
 
 function EditPasswordForm() {
   const [password, setPassword] = useState("");
@@ -71,7 +71,12 @@ function EditPasswordForm() {
     );
   };
   return (
-    <View style={{ marginTop: 8 }}>
+    <View style={{
+      marginTop: 8, padding: 16,
+      margin: 16,
+      borderRadius: 16,
+      backgroundColor: "#ECE9EC",
+    }}>
       <View style={styles.input}>
         <TextInput
           label="请输入旧密码"
@@ -209,7 +214,7 @@ function EditPasswordForm() {
 export default function EditPasswordView() {
   return (
     <View>
-      <Title style={{ textAlign:"center" }}>修改密码</Title>
+      <Title style={{ textAlign: "center" }}>修改密码</Title>
       <EditPasswordForm></EditPasswordForm>
     </View>
   );
@@ -226,11 +231,14 @@ const styles = StyleSheet.create({
   input: {
     padding: 16,
     paddingBottom: 0,
+    backgroundColor: "#ECE9EC",
+
   },
   buttonGroup: {
     flexDirection: "row",
     justifyContent: "center",
     padding: 16,
+    backgroundColor: "#ECE9EC",
   },
   button: {
     width: "25%",

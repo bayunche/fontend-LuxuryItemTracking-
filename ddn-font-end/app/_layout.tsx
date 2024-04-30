@@ -127,6 +127,14 @@ function RootLayoutNav() {
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 <Stack.Screen name="viewItems" options={{ headerShown: false }} />
                 <Stack.Screen name="editInfo" options={{ headerShown: false }} />
+                <Stack.Screen name="registerItemScreen" options={{ headerShown: false }} />
+                <Stack.Screen name="editLogistInfo" options={{ headerShown: false }} />
+                <Stack.Screen name="editSalesInfo" options={{ headerShown: false }} />
+                <Stack.Screen name="editItem" options={{ headerShown: false }} />
+                <Stack.Screen name="transactionList" options={{ headerShown: false }} />
+                <Stack.Screen name="transactionLog" options={{ headerShown: false }} />
+                
+                
                 <Stack.Screen
                   name="modal"
                   options={{ presentation: "modal" }}

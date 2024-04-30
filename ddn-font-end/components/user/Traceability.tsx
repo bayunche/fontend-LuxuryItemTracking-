@@ -1,11 +1,11 @@
 import { Dimensions, Platform, StyleSheet, TouchableOpacity } from "react-native";
-import { Text, View } from "./Themed";
+import { Text, View } from "../Themed";
 import { AnimatedFAB, Button } from "react-native-paper";
 import { useEffect, useState } from "react";
-import ViewItem from "./itemDetail";
+import ViewItem from "../item/itemDetail";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Camera, CameraType } from "expo-camera";
-import { useItemStore } from "../zustand/store";
+import { useItemStore } from "../../zustand/store";
 import { router } from "expo-router";
 
 const { width: SCREEN_WIDTH,height } = Dimensions.get("window");
