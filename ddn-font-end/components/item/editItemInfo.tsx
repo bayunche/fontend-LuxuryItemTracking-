@@ -13,6 +13,8 @@ import "dayjs/locale/zh-cn";
 import { Image } from "expo-image";
 import Toast from "react-native-root-toast";
 import { updateLuxuryItem } from "../../api/item";
+import { uploadImage } from "../../util/uploadImage";
+
 const { width } = Dimensions.get("window");
 const EditItemInfoForm = ({ itemId }: { itemId: string }) => {
     const { itemInfo, getItemInfo } = useItemStore((state) => {
@@ -58,23 +60,26 @@ const EditItemInfoForm = ({ itemId }: { itemId: string }) => {
                             mediaTypes: imagePicker.MediaTypeOptions.All,
                             allowsEditing: true,
                             // aspect: [4, 3],
-                            base64: true,
                             quality: 1,
                         });
 
                         if (!photo.canceled) {
-                            setItemImage(photo.assets[0].base64);
+                            let imgUrl = await uploadImage(photo.assets[0].uri);
+                            setItemImage(imgUrl);
+
                         }
                     } else if (select === "2") {
                         const result = await imagePicker.launchImageLibraryAsync({
                             mediaTypes: imagePicker.MediaTypeOptions.All,
                             allowsEditing: true,
                             // aspect: [4, 3],
-                            base64: true,
+
                             quality: 1,
                         });
                         if (!result.canceled) {
-                            setItemImage(result.assets[0].base64);
+                            let imgUrl = await uploadImage(result.assets[0].uri);
+                            setItemImage(imgUrl);
+
                         }
                     }
                 }
@@ -219,7 +224,7 @@ const EditItemInfoForm = ({ itemId }: { itemId: string }) => {
                         <View style={styles.imageWrap}>
                             <Title>物品图片</Title>
                             <Image style={styles.image}
-                                source={'data:image/jpeg;base64,' + itemImage}
+                                source={itemImage}
                                 placeholder={blurhash}
                                 contentFit="contain"
                                 transition={1000}></Image>

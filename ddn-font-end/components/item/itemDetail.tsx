@@ -675,7 +675,7 @@ export default function ViewItem() {
             <Image
               style={styles.image}
               source={
-                displayQRcode ? `${itemInfos?.qrcode}` : `data:image/jpeg;base64,${itemInfos?.itemImage}`
+                displayQRcode ? `${itemInfos?.qrcode}` : itemInfos?.itemImage
               }
               contentFit="contain"
               placeholder={require("../../assets/images/115668636_p0_master1200.jpg")}

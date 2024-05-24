@@ -36,9 +36,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bayunche.ddnfontend"
@@ -52,9 +50,7 @@
     },
     "build": {
       "babel": {
-        "include": [
-          "@ui-kitten/components"
-        ]
+        "include": ["@ui-kitten/components"]
       }
     },
     "web": {
@@ -76,6 +72,20 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          },
+          "ios": {
+            "infoPlist": {
+              "NSAppTransportSecurity": { "NSAllowsArbitraryLoads": true }
+            },
+            "supportsTablet": true
+          }
+        }
       ]
     ],
     "experiments": {
@@ -91,5 +101,4 @@
     },
     "owner": "bayunche"
   }
-
 }

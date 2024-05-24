@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 // import { ScrollView } from 'react-native';
 // import Banner from "./Banner";
 import { Text, View } from "./Themed";
@@ -6,8 +6,14 @@ import Banner from "./Banner";
 // import { Appbar } from "react-native-paper";
 import APPbars from "./AppBar";
 import { Card } from "react-native-paper";
-import { router } from "expo-router";
-const bannerData = [
+import { router, useFocusEffect } from "expo-router";
+type BannerData = {
+  title: string;
+  description: string;
+  url: string;
+  onPress: () => void;
+};
+const bannerDatas = [
   {
     title: "Banner 1",
     description: "Floor: 0.03 ETH",
@@ -70,10 +76,10 @@ const RouterBar = () => {
       {routerList.map((item, index) => {
         return (
           <Card key={index} style={styles.routerCard} onPress={item.onPress}>
-          <Card.Content style={{ display: "flex", flexDirection: "column" }}>
-            <Text >{item.name}</Text>
-          </Card.Content>
-        </Card>
+            <Card.Content style={{ display: "flex", flexDirection: "column" }}>
+              <Text >{item.name}</Text>
+            </Card.Content>
+          </Card>
         )
       })}
     </View>
@@ -82,16 +88,69 @@ const RouterBar = () => {
   )
 
 }
+
+
 const HomeScreen = () => {
+
+  const { itemList, getItemList, setItemId, itemId } = useItemStore(
+    (state) => ({
+      itemList: state.itemList,
+      getItemList: state.getItemList,
+      setItemId: state.setItemId,
+      itemId: state.itemId,
+    })
+  );
+  const [bannerData, setBannerData] = useState<BannerData[]>([])
+  const displayBanner = (bannerData: any) => {
+    if (bannerData.length === 0) {
+      return [];
+    }
+    return bannerData.map((item: any, index: number) => {
+      return {
+        title: item.itemName,
+        description: `￥ ${item.value ? item.value : "0"}`,
+        url: item.itemImage,
+        onPress: () => {
+          setItemId(item.itemId)
+          router.push("/viewItems")
+        }
+      }
+    })
+
+  }
+  useFocusEffect(
+    useCallback(() => {
+      // 获取banner信息
+      const getBannerData = async () => {
+        try {
+          const data = await fetchBannerData() as any
+          console.log(data.data);
+         
+          setBannerData( displayBanner(data.data))
+        } catch (error) {
+          console.log(error);
+          // Handle error
+          Toast.show("获取banner信息失败");
+        }
+
+      }
+      getBannerData()
+      // setBannerData(getBannerData())
+
+    }, [])
+  )
   return (
     <View style={{ flex: 1 }}>
       <APPbars />
-      <Banner banners={bannerData} />
+      <Banner banners={bannerData.length !== 0 ? bannerData : bannerDatas} />
       <RouterBar />
     </View>
   );
 };
 import { StyleSheet } from 'react-native'
+import { fetchBannerData } from "../api/user";
+import Toast from "react-native-root-toast";
+import { useItemStore } from "../zustand/store";
 
 const styles = StyleSheet.create({
   Banner: {

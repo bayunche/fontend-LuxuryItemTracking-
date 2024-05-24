@@ -6,7 +6,11 @@ import Toast from 'react-native-root-toast';
 import { tansParams } from '../util/paramsEdit';
 import { router } from "expo-router";
 // import { err } from 'react-native-svg/lib/typescript/xml';
+
+//http生产环境
 let   baseUrl= "http://8.134.196.44:3101"
+// https生产环境
+// const   baseUrl= "https://8.134.196.44:3101"
 
 type Result<T> = {
     // code: number;
@@ -19,7 +23,7 @@ export class Request {
     // axios 实例
     instance: AxiosInstance;
     // 基础配置，url和超时时间
-    baseConfig: AxiosRequestConfig = { baseURL: baseUrl, timeout: 60000 };
+    baseConfig: AxiosRequestConfig = { baseURL: baseUrl, timeout: 60000, };
 
     constructor(config: AxiosRequestConfig) {
         // 使用axios.create创建axios实例
@@ -41,7 +45,6 @@ export class Request {
                     config.params = {};
                     config.url = url;
                 }
-
 
                 return config;
             },
@@ -84,7 +87,7 @@ export class Request {
 
                     return Promise.reject(err);
                 }
-
+               
                 // 这里是AxiosError类型，所以一般我们只reject我们需要的响应即可
                 Toast.show(`Request failed to send ErrorMessage：${err}`)
                 return Promise.reject(err.response);

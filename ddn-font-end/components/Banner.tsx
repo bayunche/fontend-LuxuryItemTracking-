@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { StyleSheet } from "react-native";
 import { ViewPager } from "@ui-kitten/components";
 import { Card } from "react-native-paper";
 import { View } from "./Themed";
 import { Image } from "expo-image";
+import { useFocusEffect } from "expo-router";
 type BannerProps = {
   banners: Array<{
     title: string;
@@ -15,7 +16,6 @@ type BannerProps = {
 
 const Banner = ({ banners }: BannerProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       setSelectedIndex((prevIndex) => (prevIndex + 1) % banners.length);
@@ -23,7 +23,6 @@ const Banner = ({ banners }: BannerProps) => {
 
     return () => clearInterval(intervalId); // 清除定时器
   }, [banners.length]);
-
   return (
     <ViewPager
       style={styles.viewPager}
@@ -44,7 +43,7 @@ const Banner = ({ banners }: BannerProps) => {
 
 const styles = StyleSheet.create({
   viewPager: {
-  
+
     height: 200, // 根据需要调整
   },
   page: {

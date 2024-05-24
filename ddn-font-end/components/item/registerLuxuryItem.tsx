@@ -12,6 +12,7 @@ import Toast from "react-native-root-toast";
 import { registerLuxuryItem } from "../../api/item";
 import { Image } from 'expo-image';
 import { router } from "expo-router";
+import { uploadImage } from "../../util/uploadImage";
 const { width } = Dimensions.get("window");
 
 const CostomInput = ({ label, text, onChangeText, disabled, validText, Err }: { label: string, text: string, onChangeText: (text: string) => void, disabled: boolean, validText: string, Err: boolean }) => {
@@ -130,7 +131,7 @@ export default function RegisterItemView() {
                 if (dialogVisible === false && initalLoad === false) {
                     if (select === "1") {
                         let photo = await imagePicker.launchCameraAsync({
-                            mediaTypes: imagePicker.MediaTypeOptions.All,
+                            mediaTypes: imagePicker.MediaTypeOptions.Images,
                             allowsEditing: true,
                             // aspect: [4, 3],
                             base64: true,
@@ -138,18 +139,22 @@ export default function RegisterItemView() {
                         });
 
                         if (!photo.canceled) {
-                            setItemImage(photo.assets[0].base64);
+                            console.log(photo.assets[0].uri, photo.assets[0].fileName);
+                            let imgUrl = await uploadImage(photo.assets[0].uri);
+                            setItemImage(imgUrl);
                         }
                     } else if (select === "2") {
                         const result = await imagePicker.launchImageLibraryAsync({
-                            mediaTypes: imagePicker.MediaTypeOptions.All,
+                            mediaTypes: imagePicker.MediaTypeOptions.Images,
                             allowsEditing: true,
                             // aspect: [4, 3],
                             base64: true,
                             quality: 1,
+
                         });
                         if (!result.canceled) {
-                            setItemImage(result.assets[0].base64);
+                            let imgUrl = await uploadImage(result.assets[0].uri);
+                            setItemImage(imgUrl);
                         }
                     }
                 }
@@ -233,7 +238,7 @@ export default function RegisterItemView() {
                         <View style={styles.imageWrap}>
                             <Title>物品图片</Title>
                             <Image style={styles.image}
-                                source={'data:image/jpeg;base64,' + itemImage}
+                                source={itemImage as string}
                                 placeholder={blurhash}
                                 contentFit="contain"
                                 transition={1000}></Image>
@@ -244,7 +249,7 @@ export default function RegisterItemView() {
                                 mode="contained"
                                 style={{
                                     height: 40,
-                               
+
                                 }}
                                 onPress={pickImage}
                             >

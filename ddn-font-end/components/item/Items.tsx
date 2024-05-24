@@ -86,6 +86,8 @@ const CostomCard = ({ item, handleView }: any) => {
       }
     } finally {
       closeMenu()
+      hideConfirmDialog()
+      router.replace("/personalItem")
     }
 
   }
@@ -125,7 +127,7 @@ const CostomCard = ({ item, handleView }: any) => {
             onLongPress={openMenu}
           >
             <Card.Cover
-              source={{ uri: "data:image/jpeg;base64," + item.itemImage }}
+              source={{ uri: item.itemImage }}
             />
             <Card.Content>
               <Paragraph>品名 {item.itemName}</Paragraph>
@@ -210,7 +212,6 @@ function Views() {
     //   0
     // );
   }
-  const base64ToGallery = async (base64String: any) => { };
   const handleView = (itemId: string) => {
     // router.push("/viewItems");
     setItemId(itemId);

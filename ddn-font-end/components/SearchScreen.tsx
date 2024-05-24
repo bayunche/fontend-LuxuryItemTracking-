@@ -38,7 +38,7 @@ const BlockchainLuxuryApp = () => {
   return (
     <View style={styles.container}>
     <Searchbar
-      placeholder="搜索区块链奢侈品"
+      placeholder="溯源区块链奢侈品"
       onChangeText={onChangeSearch}
       value={searchQuery}
       style={styles.searchbar}

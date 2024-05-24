@@ -3,8 +3,8 @@ import request from "../util/request";
 
 
 
-export async function createUserKey(data:createUserPrivateKeyParams) {
-    return (await request.post("/user/signupUser",data)).data
+export async function createUserKey(data: createUserPrivateKeyParams) {
+    return (await request.post("/user/signupUser", data)).data
 }
 
 export async function editUserInfo(data: any) {
@@ -26,6 +26,9 @@ export async function getTransactionListByUserId() {
     return (await request.get('/user/getTransactionLogList')).data
 }
 export async function getTransactionInfo(params: any) {
-let {transactionLogId}=params
+    let { transactionLogId } = params
     return (await request.get(`/user/getTransactionLog?transactionLogId=${transactionLogId}`)).data
+}
+export async function fetchBannerData() {
+    return (await request.get('/item/getBanner')).data
 }
