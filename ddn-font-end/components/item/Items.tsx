@@ -203,7 +203,7 @@ function Views() {
 
   let value = 0;
   if (itemList.length > 0) {
-    value = itemList.reduce((acc: any, shoe: any) => acc + parseInt(shoe.value), 0);
+    value = itemList.reduce((acc: any, shoe: any) => acc + parseInt(shoe.value)||0, 0);
   }
 
   if (itemList.length > 0) {

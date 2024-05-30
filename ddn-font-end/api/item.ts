@@ -39,6 +39,14 @@ export async function updateLuxuryItem(data: object) {
     return (await request.put('/certify/updateItemInfo', data)).data
 }
 
-export async function refreshItemValuaction(data: object){
+export async function refreshItemValuaction(data: object) {
     return (await request.post('/certify/setLuxuryItemValuation', data)).data
+}
+export async function getItembanner(params: object) {
+    return (await request.get('/item/getItemBanner', {params})).data
+}
+
+//搜索物品
+export async function searchItem(params: object) {
+ return (await request.get("/item/searchItem",{params})).data   
 }

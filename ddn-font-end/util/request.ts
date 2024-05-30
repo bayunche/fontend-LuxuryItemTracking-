@@ -44,8 +44,8 @@ export class Request {
                     url = url.slice(0, -1);
                     config.params = {};
                     config.url = url;
+                    
                 }
-
                 return config;
             },
             (err: any) => {

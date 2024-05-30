@@ -8,7 +8,7 @@ import { Camera, CameraType } from "expo-camera";
 import { useItemStore } from "../../zustand/store";
 import { router } from "expo-router";
 
-const { width: SCREEN_WIDTH,height } = Dimensions.get("window");
+const { width: SCREEN_WIDTH, height } = Dimensions.get("window");
 
 
 // useEffect
@@ -22,14 +22,14 @@ function Scanner() {
   const [permissionResponse, requestPermission] =
     BarCodeScanner.usePermissions();
 
-    const { setItemId, itemId, getItemInfo, itemInfo } = useItemStore(
-      (state) => ({
-        setItemId: state.setItemId,
-        itemId: state.itemId,
-        getItemInfo: state.getItemInfo,
-        itemInfo: state.itemInfo,
-      })
-    );
+  const { setItemId, itemId, getItemInfo, itemInfo } = useItemStore(
+    (state) => ({
+      setItemId: state.setItemId,
+      itemId: state.itemId,
+      getItemInfo: state.getItemInfo,
+      itemInfo: state.itemInfo,
+    })
+  );
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -50,10 +50,23 @@ function Scanner() {
     type: string;
     data: any;
   }) => {
-   let dataObj= JSON.parse(data)
+    //验证二维码是否为物品二维码（内容为物品id）
+    // 使用正则匹配该扫码结果是否为json和是否有itemid
+    const jsonReg = /^\{.*\}/;
+    const itemIdReg = /"itemId":\d+/;
+    const isJson = jsonReg.test(data);
+    const hasItemId = itemIdReg.test(data);
+    if (!isJson || !hasItemId) {
+      // 不是物品二维码
+      return alert("不是物品二维码");
+    }
+
+
+    let dataObj = JSON.parse(data)
     setItemId(dataObj.itemId);
     router.push("/viewItems");
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+
     setScanned(true);
 
   };
@@ -98,14 +111,15 @@ function Scanner() {
             <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
               <Text>Flip Camera</Text>
             </TouchableOpacity>
+            {scanned && (
+              <Button style={styles.button} onPress={() => setScanned(false)}>
+                'Tap to Scan Again'
+              </Button>
+            )}
           </View>
         </Camera>
       </View>
-      {scanned && (
-        <Button style={styles.button} onPress={() => setScanned(false)}>
-          'Tap to Scan Again'
-        </Button>
-      )}
+
     </View>
   );
 }
@@ -127,9 +141,9 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
- 
+
   },
-  cameraWrap:{
+  cameraWrap: {
     height: height,
   },
   buttonContainer: {
