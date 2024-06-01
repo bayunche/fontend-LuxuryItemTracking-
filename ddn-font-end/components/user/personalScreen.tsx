@@ -102,7 +102,15 @@ function PersonalInfo({ setVisible }: { setVisible: (visible: boolean) => void }
             setVisible(true)
           },
         },
-
+        {
+          label: "余额消费记录",
+          description: "",
+          leftIcon: "",
+          onPress: () => {
+            // 支付逻辑
+            router.push("/consumeList")
+          },
+        },
       ],
     },
     {
@@ -120,15 +128,7 @@ function PersonalInfo({ setVisible }: { setVisible: (visible: boolean) => void }
           leftIcon: "",
           onPress: () => router.push("/transactionList"),
         },
-        {
-          label: "重置额度",
-          description: "",
-          leftIcon: "",
-          onPress: () => {
-            // 支付逻辑
-
-          },
-        },
+        
       ],
     },
   ];

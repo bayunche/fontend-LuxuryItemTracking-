@@ -32,3 +32,10 @@ export async function getTransactionInfo(params: any) {
 export async function fetchBannerData() {
     return (await request.get('/item/getBanner')).data
 }
+export async function getConsumeListByUserId(params: any) {
+    return (await request.get('/user/getConsumeList', params)).data
+}
+
+export async function getConsumeById(params: any) {
+    return (await request.get('/user/getConsumeListById', params)).data
+}

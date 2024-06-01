@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getItemDetail, getListItem } from "../api/item";
-import { getTransactionInfo, getTransactionListByUserId, getUserInfos } from "../api/user";
+import { getTransactionInfo, getTransactionListByUserId, getUserInfos, getConsumeListByUserId } from "../api/user";
 import { getTopUp } from "../api/login";
 import { DateType } from "react-native-ui-datepicker";
 // import { login } from "../api/login";
@@ -14,6 +14,14 @@ interface useTransactionState {
     getTransactionList: () => void
     transactionList: transactionLogList
     setTransactionList: (by: transactionLogList) => void
+}
+
+interface useConsumeListState {
+    consumeId: string
+    setConsumeId: (by: string) => void
+    consumeList: consumeProps[]
+    getConsumeList: (id: string) => void
+    setConsumeList: (by: consumeProps[]) => void
 }
 
 interface useUserState {
@@ -85,7 +93,7 @@ type itemInfoType = {
     logistics_status: string | number
     salesInfo_status: string | number
     hasChange: string
-    reason: string|null|undefined
+    reason: string | null | undefined
 }
 type transactionLog = {
     id: number,
@@ -97,6 +105,13 @@ type transactionLog = {
     blockNumber: bigint,
     transactionHash: string,
     description: string,
+}
+type consumeProps = {
+    out_trade_no: string,
+    balance: string | number | bigint | undefined | null,
+    beforeBalance: string | number | bigint | undefined | null,
+    tradeTime: Date | string | undefined | null,
+    trueValue: string | number | bigint | undefined | null,
 }
 type transactionLogList = transactionLog[]
 const useUserStore = create<useUserState>((set) => ({
@@ -178,7 +193,7 @@ const useTransactionStore = create<useTransactionState>((set) => ({
         try {
             let info: any = await getTransactionListByUserId();
             result = await info.data as transactionLogList
-            set({ transactionList:result })
+            set({ transactionList: result })
         } catch (error) {
             console.log(error);
         }
@@ -191,7 +206,7 @@ const useTransactionStore = create<useTransactionState>((set) => ({
     getTransactionLogs: async (id: number) => {
         let result: any = {};
         try {
-            let info: any = await getTransactionInfo({ transactionLogId:id });
+            let info: any = await getTransactionInfo({ transactionLogId: id });
             result = await info.data
             set(() => ({ transactionLogs: result }));
         } catch (error) {
@@ -205,4 +220,24 @@ const useTransactionStore = create<useTransactionState>((set) => ({
     setTransactionList: (by) => set({ transactionList: by }),
 
 }))
-export { useUserStore, useItemStore, itemInfoType,useTransactionStore,transactionLogList,transactionLog  };
+const useConsumeListStore = create<useConsumeListState>((set) => ({
+    consumeId: '',
+    setConsumeId: (id: string) => set(() => ({ consumeId: id })),
+    consumeList: <consumeProps[]>[],
+    getConsumeList: async () => {
+        let result: consumeProps[] = []
+        try {
+            let info: any = await getConsumeListByUserId({})
+            result = await info.data as consumeProps[] 
+            set({ consumeList: result })
+        } catch (error) {
+            console.log(error);
+        }
+        return result
+
+    },
+
+    setConsumeList: (by) => set({ consumeList: by }),
+
+}))
+export { useUserStore, useItemStore, itemInfoType, useTransactionStore, transactionLogList, transactionLog };
