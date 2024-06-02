@@ -133,6 +133,8 @@ function RootLayoutNav() {
                 <Stack.Screen name="editItem" options={{ headerShown: false }} />
                 <Stack.Screen name="transactionList" options={{ headerShown: false }} />
                 <Stack.Screen name="transactionLog" options={{ headerShown: false }} />
+                <Stack.Screen name="consumeLogList" options={{ headerShown: false }} />
+                <Stack.Screen name="comsumeLog" options={{ headerShown: false }} />
                 
                 
                 <Stack.Screen

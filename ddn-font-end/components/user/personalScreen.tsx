@@ -108,7 +108,7 @@ function PersonalInfo({ setVisible }: { setVisible: (visible: boolean) => void }
           leftIcon: "",
           onPress: () => {
             // 支付逻辑
-            router.push("/consumeList")
+            router.push("/consumeLogList")
           },
         },
       ],

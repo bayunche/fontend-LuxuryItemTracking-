@@ -20,7 +20,7 @@ interface useConsumeListState {
     consumeId: string
     setConsumeId: (by: string) => void
     consumeList: consumeProps[]
-    getConsumeList: (id: string) => void
+    getConsumeList: () => void
     setConsumeList: (by: consumeProps[]) => void
 }
 
@@ -227,7 +227,8 @@ const useConsumeListStore = create<useConsumeListState>((set) => ({
     getConsumeList: async () => {
         let result: consumeProps[] = []
         try {
-            let info: any = await getConsumeListByUserId({})
+            let info: any = await getConsumeListByUserId()
+            console.log(info);
             result = await info.data as consumeProps[] 
             set({ consumeList: result })
         } catch (error) {
@@ -240,4 +241,4 @@ const useConsumeListStore = create<useConsumeListState>((set) => ({
     setConsumeList: (by) => set({ consumeList: by }),
 
 }))
-export { useUserStore, useItemStore, itemInfoType, useTransactionStore, transactionLogList, transactionLog };
+export { useUserStore, useItemStore, itemInfoType, useTransactionStore,useConsumeListStore , transactionLogList, transactionLog };
