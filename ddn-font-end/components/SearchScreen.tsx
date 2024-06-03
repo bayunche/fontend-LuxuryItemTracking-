@@ -3,11 +3,13 @@ import { ScrollView, View, StyleSheet } from 'react-native';
 import { Card, Text, Button, BottomNavigation, Searchbar } from 'react-native-paper';
 import { getItembanner, searchItem } from '../api/item';
 import { router, useFocusEffect } from 'expo-router';
+import { useItemStore } from '../zustand/store';
 
 type bannerItem = {
   title: string;
   subtitle: string;
   imageUri: string;
+  itemId: string
 }
 
 
@@ -17,7 +19,12 @@ const BlockchainLuxuryApp = () => {
   const [top, setTop] = useState<bannerItem[]>([]);
   const [attention, setAttention] = useState<bannerItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasSearched, setHasSearched] = useState(false);
   const [searchItems, setSearchItems] = useState<bannerItem[]>([]);
+  const { setItemId } = useItemStore((state) => ({
+    setItemId: state.setItemId
+  }))
+
   const tops = [
     { title: '奢侈品项链 #1', subtitle: '地板价 0.5 ETH', imageUri: 'https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/2feb88bf37b963dd29c91c8b49987d7ae3b7d0e6/ddn-font-end/assets/images/114644639_p0_master1200.jpg?raw=true' },
     { title: '奢侈品项链 #1', subtitle: '地板价 0.5 ETH', imageUri: 'https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/2feb88bf37b963dd29c91c8b49987d7ae3b7d0e6/ddn-font-end/assets/images/114644639_p0_master1200.jpg?raw=true' },
@@ -38,13 +45,31 @@ const BlockchainLuxuryApp = () => {
     { title: '奢侈品项链 #1', subtitle: '地板价 0.5 ETH', imageUri: 'https://example.com/image1.jpg' },
 
   ];
-  const renderCards = (items: any) => items.map((item: any, index: number) => (
-    <Card key={index} style={styles.card}>
-      <Card.Title title={item.title} subtitle={item.subtitle} />
-      <Card.Cover source={{ uri: item.imageUri }} />
-    </Card>
-  ));
-  const onChangeSearch = (query: string) => setSearchQuery(query);
+  const renderCards = (items: any) => {
+    const handleView = (itemId: string) => {
+      setItemId(itemId)
+      router.push("/viewItems")
+
+    }
+    return (
+      items.map((item: any, index: number) => (
+
+        <Card key={index} style={styles.card} onPress={() => {
+          handleView(item.itemId)
+        }}>
+          <Card.Title title={item.title} subtitle={item.subtitle} />
+          <Card.Cover source={{ uri: item.imageUri }} />
+        </Card>
+      ))
+    )
+  };
+  const onChangeSearch = (query: string) => {
+    if (query=='') {
+      setHasSearched(false)
+    }
+    setSearchQuery(query);
+    
+  }
   const getLuxuryItemsRecent = async () => {
     // 调用API获取最新奢侈品列表
     let res: any = await getItembanner({
@@ -60,7 +85,9 @@ const BlockchainLuxuryApp = () => {
       return {
         title: item.itemName,
         subtitle: "地板价 ￥" + item.value || 0,
-        imageUri: item.itemImage
+        imageUri: item.itemImage,
+        itemId: item.itemId
+
       }
     })
     setTop(data);
@@ -78,7 +105,8 @@ const BlockchainLuxuryApp = () => {
       return {
         title: item.itemName,
         subtitle: "地板价 ￥" + item.value || 0,
-        imageUri: item.itemImage
+        imageUri: item.itemImage,
+        itemId: item.itemId
       }
     })
     // console.log(res.data)
@@ -88,6 +116,7 @@ const BlockchainLuxuryApp = () => {
   const handleSearch = async () => {
     // 执行搜索操作
     // ...
+    setHasSearched(true);
     let params = {
       searchQuery: searchQuery,
       dimension: dimension,
@@ -115,7 +144,7 @@ const BlockchainLuxuryApp = () => {
   )
   return (
     <View style={styles.container}>
-      {searchItems.length == 0 ? <View>
+      {!hasSearched  ? <View>
         <Searchbar
           placeholder="请输入你要搜索的奢侈品名称"
           onChangeText={onChangeSearch}
@@ -150,8 +179,8 @@ const BlockchainLuxuryApp = () => {
         <View style={{ padding: 14 }}>
           <Button
             onPress={() => {
-        router.push('/TraceabilityScreen')
-              
+              router.push('/TraceabilityScreen')
+
             }} mode="elevated" >区块链溯源</Button>
         </View>
         <Text style={styles.sectionTitle}>最近新增奢侈品</Text>
@@ -208,7 +237,7 @@ const BlockchainLuxuryApp = () => {
               </Card>
             )
           })}
-        </View> : <View>
+        </View> : <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
           <Text>暂无</Text>
         </View>}
       </View>}

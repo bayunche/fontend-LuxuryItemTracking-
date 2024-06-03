@@ -203,7 +203,7 @@ function Views() {
 
   let value = 0;
   if (itemList.length > 0) {
-    value = itemList.reduce((acc: any, shoe: any) => acc + parseInt(shoe.value)||0, 0);
+    value = itemList.reduce((acc: any, shoe: any) => acc + parseInt(shoe.value) || 0, 0);
   }
 
   if (itemList.length > 0) {
@@ -279,7 +279,13 @@ function Views() {
           </View>
         </View>
         <View style={styles.shoesContainer}>
-          {itemList.map((shoe: any) => (
+          {itemList.length === 0 ? <View style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",}}>
+            <Title>现在还没有注册的奢侈品</Title>
+            <Title>快去注册吧！</Title>
+          </View> : itemList.map((shoe: any) => (
             <CostomCard key={shoe.id} item={shoe} handleView={handleView}></CostomCard>
           ))}
         </View>

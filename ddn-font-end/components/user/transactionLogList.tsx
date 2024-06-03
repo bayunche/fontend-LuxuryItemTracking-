@@ -7,11 +7,11 @@ import { router, useFocusEffect } from "expo-router";
 import { useCallback } from "react";
 import moment from "moment";
 export default function TransactionLogListView() {
-    const { getTransactionList, transactionList,setTransactionLogId } = useTransactionStore((state) => {
+    const { getTransactionList, transactionList, setTransactionLogId } = useTransactionStore((state) => {
         return {
             getTransactionList: state.getTransactionList,
             transactionList: state.transactionList,
-            setTransactionLogId:state.setTransactionLogId
+            setTransactionLogId: state.setTransactionLogId
         }
     })
     useFocusEffect(useCallback(() => {
@@ -20,11 +20,13 @@ export default function TransactionLogListView() {
     }, []))
     return (
         <View style={styles.container}>
-            <View style={{margin:8,borderRadius:16,padding:8, backgroundColor: "#ECE9EC"}}>
-                <ScrollView style={{borderRadius:8}}>
-                <Title style={{ textAlign: "center", backgroundColor: "#ECE9EC" }}>交易记录列表</Title>
+            <View style={{ margin: 8, borderRadius: 16, padding: 8, backgroundColor: "#ECE9EC" }}>
+                <ScrollView style={{ borderRadius: 8 }}>
+                    <Title style={{ textAlign: "center", backgroundColor: "#ECE9EC" }}>交易记录列表</Title>
                     <View style={styles.list}>
-                        {transactionList.map((item, index) => {
+                        {transactionList.length === 0 ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#ECE9EC" }}>
+                            <Title>暂无交易记录，立刻开始注册奢侈品吧</Title>
+                        </View> : transactionList.map((item, index) => {
                             return (
                                 <List.Item
                                     key={index}
@@ -32,8 +34,8 @@ export default function TransactionLogListView() {
                                     description={`${item.description}  ${moment(item.createTime as string).format('YYYY-MM-DD HH:mm:ss')}`}
                                     left={() => <List.Icon icon="receipt" />}
                                     onPress={() => {
-                                    setTransactionLogId(item.id)
-                                    router.push('/transactionLog')
+                                        setTransactionLogId(item.id)
+                                        router.push('/transactionLog')
                                     }}
                                 />
                             )
@@ -48,15 +50,15 @@ export default function TransactionLogListView() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-       
+
     },
     list: {
-        borderRadius:16,
+        borderRadius: 16,
         display: "flex",
         justifyContent: "center",
         backgroundColor: "#ECE9EC",
-        padding:8,
-        margin:8,
+        padding: 8,
+        margin: 8,
 
     }
 })
