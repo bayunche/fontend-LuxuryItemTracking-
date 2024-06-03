@@ -46,8 +46,8 @@ yarn eas build --profile preview2 --platform android //默认只打包Android，
 # 界面示例
 
 
-![[156c49e1613eaa286b1d6812312c4f7 1.jpg]]
-![[c75b3536b2f49ae81f7e56a61ca02e0.jpg]]
+![![\[156c49e1613eaa286b1d6812312c4f7 1.jpg\]](https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/49565278753528cbd95b74999365f2425a9f17a4/ddn-font-end/156c49e1613eaa286b1d6812312c4f7.jpg)]
+![![\[c75b3536b2f49ae81f7e56a61ca02e0.jpg\]](https://github.com/bayunche/fontend-LuxuryItemTracking-/blob/49565278753528cbd95b74999365f2425a9f17a4/ddn-font-end/156c49e1613eaa286b1d6812312c4f7.jpg)]
 
 
 
