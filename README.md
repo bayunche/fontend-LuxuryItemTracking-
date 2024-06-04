@@ -1,5 +1,15 @@
 
 
+# 技术栈
+
+	React Native 
+	 Expo
+	 Zustand
+	 React Native Paper
+	 rn-viewpager
+	 Axios
+	 Lottie
+	 
 
 # 运行环境
 
