@@ -14,8 +14,14 @@ export default function TransactionLogListView() {
             setTransactionLogId: state.setTransactionLogId
         }
     })
+    let transactionLists = []
     useFocusEffect(useCallback(() => {
-        getTransactionList()
+        const getData = async () => {
+            await getTransactionList()
+
+
+        }
+        getData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []))
     return (
@@ -24,7 +30,7 @@ export default function TransactionLogListView() {
                 <ScrollView style={{ borderRadius: 8 }}>
                     <Title style={{ textAlign: "center", backgroundColor: "#ECE9EC" }}>交易记录列表</Title>
                     <View style={styles.list}>
-                        {transactionList.length === 0 ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#ECE9EC" }}>
+                        {!transactionList ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#ECE9EC" }}>
                             <Title>暂无交易记录，立刻开始注册奢侈品吧</Title>
                         </View> : transactionList.map((item, index) => {
                             return (

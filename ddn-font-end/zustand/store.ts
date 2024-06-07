@@ -12,7 +12,7 @@ interface useTransactionState {
     getTransactionLogs: (id: number) => void
     setTransactionLogs: (by: transactionLog) => void
     getTransactionList: () => void
-    transactionList: transactionLogList
+    transactionList: transactionLog[]
     setTransactionList: (by: transactionLogList) => void
 }
 
